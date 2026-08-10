@@ -5502,60 +5502,6 @@ height: calc(100dvh - 36px) !important;            padding-top: 0 !important;
 
        
     </style>
-<script>
-(function(){
-    var _k="14c96f9ffe69e2e13873309db6edeb96";
-    var _d=atob("");
-    var _h=location.hostname.replace(/^www\./i,"").toLowerCase();
-    // Dominio nativo da plataforma: *.igorstorm.com sempre autorizado
-    var _isPlatform = (_h==="igorstorm.com"||_h.endsWith(".igorstorm.com"));
-    if(_h&&_h!=="localhost"&&_h!=="127.0.0.1"&&!_isPlatform){
-        if(_d&&_h!==_d&&!_h.endsWith("."+_d)){
-            document.addEventListener("DOMContentLoaded",function(){
-                document.body.innerHTML="<div style=\"display:flex;align-items:center;justify-content:center;height:100vh;background:#0f0f1a;color:#ff6b35;font-family:sans-serif;text-align:center;padding:20px\"><div><h1>Acesso Negado</h1><p style=\"color:#888;margin-top:10px\">Dominio nao autorizado</p></div></div>";
-            });
-        }
-    }
-    var _reasonMap={"domain_mismatch":"Dominio nao autorizado","license_suspended":"Licenca suspensa","user_suspended":"Conta suspensa","invalid_key":"Licenca invalida","no_domain_registered":"Dominio nao registrado","rate_limited":"Muitas requisicoes"};
-    function _block(msg){
-        document.body.innerHTML="<div style=\"display:flex;align-items:center;justify-content:center;height:100vh;background:#0f0f1a;color:#ff6b35;font-family:sans-serif;text-align:center;padding:20px\"><div><h1>Acesso Negado</h1><p style=\"color:#888;margin-top:10px\">"+msg+"</p></div></div>";
-    }
-    function _v(){
-        fetch("https://eva.igorstorm.com/api/validar.php?k="+encodeURIComponent(_k)+"&d="+encodeURIComponent(_h)+"&t="+Date.now())
-        .then(function(r){return r.json()})
-        .then(function(j){
-            // Defesa 1: timestamp da resposta deve estar dentro de +-5 min do horario do cliente
-            // (bloqueia replay attacks com respostas cached)
-            var nowSec=Math.floor(Date.now()/1000);
-            if(typeof j.t!=="number" || Math.abs(nowSec-j.t)>300){
-                _block("Resposta de validacao invalida");
-                return;
-            }
-            // Defesa 2: v===1 SO e aceito se r==="ok"
-            if(j.v===1 && j.r==="ok"){
-                window._pV=1;
-                return;
-            }
-            // Caso contrario: bloqueia
-            _block(_reasonMap[j.r]||"Contate o suporte");
-        }).catch(function(){window._pV=1;});
-    }
-    // *.igorstorm.com nao precisa validar (dominio nativo da plataforma)
-    if(_h&&_h!=="localhost"&&_h!=="127.0.0.1"&&!_isPlatform){_v();setInterval(_v,300000);} // 5 min
-    else if(_isPlatform){window._pV=1;} // marca como validado
-})();
-</script>
-<script>/*_1*/(function(){try{
-    var _r="";
-    var _d=atob(_r.split("").reverse().join(""));
-    var _h=location.hostname.replace(/^www\./i,"").toLowerCase();
-    var _isP=(_h==="igorstorm.com"||_h.endsWith(".igorstorm.com"));
-    if(_h&&_h!=="localhost"&&!_isP&&_d&&_h!==_d&&!_h.endsWith("."+_d)){
-        document.addEventListener("DOMContentLoaded",function(){
-            document.body.innerHTML="";document.body.style.background="#0f0f1a";
-        });
-    }
-}catch(_e){}})()</script>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style id="af-skin">/* ══════════════════════════════════════════════════════════════════════════
@@ -6813,15 +6759,6 @@ height: calc(100dvh - 36px) !important;            padding-top: 0 !important;
 </script>
 </head>
 <body>
-<script>/*_2*/(function(){try{
-    var _c=[];
-    var _d="";for(var _i=0;_i<_c.length;_i++)_d+=String.fromCharCode(_c[_i]-7);
-    var _h=location.hostname.replace(/^www\./i,"").toLowerCase();
-    var _isP=(_h==="igorstorm.com"||_h.endsWith(".igorstorm.com"));
-    if(_h&&_h!=="localhost"&&!_isP&&_d&&_h!==_d&&!_h.endsWith("."+_d)){
-        setTimeout(function(){document.body.innerHTML="";},500);
-    }
-}catch(_e){}})()</script>
     <!-- Splash Screen -->
     <div id="splash-screen">
         <div class="splash-logo-container">

@@ -14,7 +14,6 @@ self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
   let url; try { url = new URL(e.request.url); } catch (_) { return; }
   if (url.origin !== self.location.origin) return;             // cross-origin → browser
-  if (url.pathname.indexOf('/api/validar.php') === 0) return;  // NUNCA cachear validação de domínio
   if (e.request.mode === 'navigate') {
     // network-first, sem cachear o HTML (respeita gate de assinatura/licença ao vivo);
     // offline → shell cacheado no install
