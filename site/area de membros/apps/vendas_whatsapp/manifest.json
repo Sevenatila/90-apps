@@ -1,0 +1,31 @@
+{
+    "id": "./",
+    "name": "Vendas no WhatsApp",
+    "short_name": "Vendas WhatsApp",
+    "description": "Aprenda tecnicas comprovadas para aumentar suas vendas utilizando o WhatsApp. Do basico ao avancado, descubra como converter conversas em clientes.",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#0f0f1a",
+    "theme_color": "#25D366",
+    "lang": "pt-BR",
+    "categories": [
+        "lifestyle",
+        "health"
+    ],
+    "icons": [
+        {
+            "src": "icon-192.png?v=14e29b86",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon-512.png?v=14e29b86",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ]
+}

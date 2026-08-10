@@ -1,0 +1,31 @@
+{
+    "id": "./",
+    "name": "Gourmet Brigadeiros",
+    "short_name": "Brigadeiros",
+    "description": "Learn how to make perfect gourmet brigadeiros, from getting the right consistency to packaging for sale. Exclusive recipes, business tips, and much more.",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#0f0f1a",
+    "theme_color": "#8B4513",
+    "lang": "en",
+    "categories": [
+        "lifestyle",
+        "health"
+    ],
+    "icons": [
+        {
+            "src": "icon-192.png?v=dbc96e09",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon-512.png?v=dbc96e09",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ]
+}

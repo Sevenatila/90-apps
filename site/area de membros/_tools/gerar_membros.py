@@ -1,0 +1,794 @@
+"""Gera membros.html — area de membros (prototipo)."""
+import json
+import os
+
+from categorias import CATEGORIAS
+
+BASE = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+
+
+def manifest(folder, slug):
+    p = os.path.join(BASE, folder, slug, 'manifest.json')
+    if not os.path.isfile(p):
+        return None
+    try:
+        return json.load(open(p, encoding='utf-8'))
+    except Exception:
+        return None
+
+
+CRIATIVOS_PATH = os.path.join(BASE, '_tools', 'criativos.json')
+CRIATIVOS = {}
+if os.path.isfile(CRIATIVOS_PATH):
+    CRIATIVOS = json.load(open(CRIATIVOS_PATH, encoding='utf-8'))
+
+PAGINAS_PATH = os.path.join(BASE, '_tools', 'paginas.json')
+PAGINAS = {}
+if os.path.isfile(PAGINAS_PATH):
+    PAGINAS = json.load(open(PAGINAS_PATH, encoding='utf-8'))
+
+dados = []
+for cat in CATEGORIAS:
+    apps = []
+    for slug in cat['apps']:
+        m = manifest('apps', slug) or {}
+        cr = CRIATIVOS.get(slug)
+        apps.append({
+            'slug': slug,
+            'nome': m.get('name', slug),
+            'desc': (m.get('description') or '').strip(),
+            'cor': m.get('theme_color') or cat['cor'],
+            'en': slug + '_en' if os.path.isdir(os.path.join(BASE, 'apps-en', slug + '_en')) else None,
+            'es': slug + '_es' if os.path.isdir(os.path.join(BASE, 'apps-es', slug + '_es')) else None,
+            'ads': [{'n': a['n'], 'url': a['url'], 'mb': round(a['bytes'] / 1048576, 1)}
+                    for a in cr['ads']] if cr else [],
+            'num': (PAGINAS.get(slug) or {}).get('id') or '--',
+            'catOrig': (PAGINAS.get(slug) or {}).get('categoria_orig') or cat['nome'].upper(),
+            'temPagina': bool((PAGINAS.get(slug) or {}).get('tem_pagina')),
+            'capa': (PAGINAS.get(slug) or {}).get('capa'),
+        })
+    dados.append({k: cat[k] for k in ('id', 'nome', 'icone', 'cor')} | {'apps': apps})
+
+TOTAL = sum(len(c['apps']) for c in dados)
+TOTAL_ADS = sum(len(a['ads']) for c in dados for a in c['apps'])
+APPS_COM_ADS = sum(1 for c in dados for a in c['apps'] if a['ads'])
+COM_PAGINA = sum(1 for c in dados for a in c['apps'] if a['temPagina'])
+
+HTML = r'''<!doctype html><html lang="pt-BR" data-tema="escuro"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Area de Membros</title>
+<script>
+try{ if (localStorage.getItem('acesso90') !== 'ok') location.replace('index.html'); }
+catch(e){ location.replace('index.html'); }
+</script>
+<style>
+:root{
+  --bg:#f4f5f9; --card:#fff; --card2:#eceef5; --linha:#dcdfe9;
+  --txt:#14161f; --txt2:#646a80; --sombra:0 1px 3px rgba(0,0,0,.08);
+}
+html[data-tema="escuro"]{
+  --bg:#0e0f16; --card:#171926; --card2:#1f2231; --linha:#2a2e40;
+  --txt:#eef0f6; --txt2:#8d93a8; --sombra:0 1px 3px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);
+  font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;
+  transition:background .2s,color .2s}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+
+/* ---------- topo ---------- */
+.topo{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:14px;
+  padding:12px 22px;background:var(--card);border-bottom:1px solid var(--linha)}
+.marca{font-weight:700;font-size:17px;letter-spacing:-.3px;margin-right:auto}
+.marca span{color:var(--txt2);font-weight:400;font-size:13px;margin-left:8px}
+.icone-btn{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;
+  font-size:17px;border:1px solid var(--linha);background:var(--card2)}
+.icone-btn:hover{filter:brightness(1.08)}
+.usuario{display:flex;align-items:center;gap:10px;padding:5px 12px 5px 5px;
+  border-radius:999px;border:1px solid var(--linha);background:var(--card2)}
+.avatar{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;
+  font-weight:700;font-size:14px;color:#fff;flex:0 0 auto}
+.nome-usuario{font-size:14px;font-weight:600}
+
+/* ---------- conteudo ---------- */
+.conteudo{max-width:1180px;margin:0 auto;padding:26px 22px 60px}
+.titulo-pg{font-size:24px;margin:0 0 2px;letter-spacing:-.4px}
+.sub-pg{color:var(--txt2);margin:0 0 26px;font-size:14px}
+
+.categoria{margin-bottom:30px}
+.cab-cat{display:flex;align-items:center;gap:11px;margin-bottom:13px}
+.bolha{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-size:17px}
+.nome-cat{font-size:16px;font-weight:650;margin:0}
+.contador{font-size:12px;color:var(--txt2);background:var(--card2);
+  padding:2px 9px;border-radius:999px;border:1px solid var(--linha)}
+.hamburguer{margin-left:auto;width:36px;height:36px;border-radius:9px;
+  border:1px solid var(--linha);background:var(--card2);display:grid;place-items:center;gap:3.5px}
+.hamburguer span{display:block;width:16px;height:2px;border-radius:2px;background:var(--txt)}
+.hamburguer:hover{filter:brightness(1.08)}
+
+.grade{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.app{display:flex;gap:12px;align-items:center;text-align:left;width:100%;
+  padding:12px;border-radius:13px;background:var(--card);border:1px solid var(--linha);
+  border-left:3px solid var(--c);box-shadow:var(--sombra);transition:.15s}
+.app:hover{transform:translateY(-2px);filter:brightness(1.04)}
+.app img{width:46px;height:46px;border-radius:11px;flex:0 0 auto;object-fit:cover;background:var(--card2)}
+.app b{display:block;font-size:14px;font-weight:620}
+.app small{display:block;color:var(--txt2);font-size:11.5px;margin-top:2px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* ---------- barra lateral ---------- */
+.veu{position:fixed;inset:0;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;
+  transition:opacity .2s;z-index:50}
+.veu.on{opacity:1;pointer-events:auto}
+.lateral{position:fixed;top:0;right:0;bottom:0;width:340px;max-width:88vw;z-index:60;
+  background:var(--card);border-left:1px solid var(--linha);
+  transform:translateX(100%);transition:transform .22s;display:flex;flex-direction:column}
+.lateral.on{transform:none}
+.cab-lat{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--linha)}
+.cab-lat h3{margin:0;font-size:15px;flex:1}
+.busca{margin:12px 16px 8px;padding:9px 12px;border-radius:9px;width:calc(100% - 32px);
+  border:1px solid var(--linha);background:var(--card2);color:var(--txt);font:inherit;font-size:13.5px}
+.busca:focus{outline:2px solid var(--c-ativa,#4a9ee2);outline-offset:-1px}
+.lista{flex:1;overflow-y:auto;padding:4px 10px 18px}
+.grupo-lat{margin-top:12px}
+.grupo-lat h4{margin:0 0 6px;padding:0 6px;font-size:11px;letter-spacing:.7px;
+  text-transform:uppercase;color:var(--txt2)}
+.item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;
+  padding:8px 8px;border-radius:9px;font-size:13.5px}
+.item:hover{background:var(--card2)}
+.item img{width:28px;height:28px;border-radius:7px;flex:0 0 auto;background:var(--card2)}
+.item .p{width:6px;height:6px;border-radius:50%;background:var(--c);flex:0 0 auto}
+.vazio{padding:22px 12px;color:var(--txt2);font-size:13px;text-align:center}
+
+/* ---------- modal ---------- */
+.modal{position:fixed;inset:0;z-index:70;display:grid;place-items:center;padding:22px;
+  background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity .2s}
+.modal.on{opacity:1;pointer-events:auto}
+.caixa{width:100%;max-width:420px;background:var(--card);border:1px solid var(--linha);
+  border-radius:18px;padding:28px;text-align:center;transform:scale(.96);transition:transform .2s}
+.modal.on .caixa{transform:none}
+.caixa>img{width:88px;height:88px;border-radius:22px;object-fit:cover;background:var(--card2)}
+.caixa h2{margin:14px 0 4px;font-size:20px;letter-spacing:-.3px}
+.caixa .cat-tag{display:inline-block;font-size:11.5px;color:var(--txt2);
+  border:1px solid var(--linha);background:var(--card2);padding:2px 10px;border-radius:999px}
+.caixa p{color:var(--txt2);font-size:13px;margin:12px 0 20px;line-height:1.5}
+.acoes{display:flex;gap:10px}
+.btn{flex:1;padding:11px;border-radius:11px;font-weight:600;font-size:14px;
+  border:1px solid var(--linha);background:var(--card2)}
+.btn:hover{filter:brightness(1.1)}
+.btn.principal{background:var(--c);border-color:var(--c);color:#fff}
+.fechar{position:absolute;top:14px;right:16px;font-size:22px;color:var(--txt2);
+  width:34px;height:34px;border-radius:9px}
+.fechar:hover{background:var(--card2)}
+.campo{width:100%;padding:11px 13px;border-radius:10px;border:1px solid var(--linha);
+  background:var(--card2);color:var(--txt);font:inherit;font-size:14px;margin:6px 0 4px}
+.campo:focus{outline:2px solid var(--c);outline-offset:-1px}
+.rotulo{display:block;text-align:left;font-size:11.5px;letter-spacing:.6px;
+  text-transform:uppercase;color:var(--txt2);margin-bottom:2px}
+.slug{text-align:left;font-size:11.5px;color:var(--txt2);margin:0 0 16px;font-family:ui-monospace,monospace}
+.aviso{font-size:12px;color:var(--txt2);margin:14px 0 0}
+
+/* ---------- navegacao de paginas ---------- */
+.nav{display:flex;gap:4px;background:var(--card2);border:1px solid var(--linha);
+  border-radius:11px;padding:4px}
+.nav button{padding:7px 15px;border-radius:8px;font-size:13.5px;font-weight:600;color:var(--txt2)}
+.nav button.on{background:var(--card);color:var(--txt);box-shadow:var(--sombra)}
+.pagina{display:none}.pagina.on{display:block}
+
+/* ---------- criativos ---------- */
+.filtros{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.chip{padding:6px 14px;border-radius:999px;font-size:13px;border:1px solid var(--linha);
+  background:var(--card);color:var(--txt2)}
+.chip.on{background:var(--txt);color:var(--bg);border-color:var(--txt)}
+.criativo{background:var(--card);border:1px solid var(--linha);border-radius:14px;
+  padding:15px;margin-bottom:13px;box-shadow:var(--sombra)}
+.cab-cri{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.cab-cri img{width:44px;height:44px;border-radius:11px;flex:0 0 auto;background:var(--card2)}
+.cab-cri b{display:block;font-size:14.5px}
+.cab-cri small{color:var(--txt2);font-size:12px}
+.btn-todos{margin-left:auto;padding:9px 15px;border-radius:10px;font-size:13px;font-weight:600;
+  background:var(--c);color:#fff;display:flex;align-items:center;gap:7px}
+.btn-todos:hover{filter:brightness(1.1)}
+.videos{display:grid;gap:9px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));margin-top:13px}
+.video{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:10px;
+  background:var(--card2);border:1px solid var(--linha);font-size:13px}
+.video .num{width:24px;height:24px;border-radius:7px;background:var(--c);color:#fff;
+  display:grid;place-items:center;font-size:11.5px;font-weight:700;flex:0 0 auto}
+.video .peso{color:var(--txt2);font-size:11.5px;margin-left:auto}
+.video button{padding:5px 9px;border-radius:7px;font-size:12px;border:1px solid var(--linha);
+  background:var(--card)}
+.video button:hover{filter:brightness(1.12)}
+.sem-ads{color:var(--txt2);font-size:12.5px;margin-top:11px;padding:9px 11px;
+  border-radius:9px;background:var(--card2);border:1px dashed var(--linha)}
+/* ---------- paginas (lista) ---------- */
+.pg-card{background:var(--card);border:1px solid var(--linha);border-radius:14px;
+  overflow:hidden;box-shadow:var(--sombra);cursor:pointer;transition:.15s;display:flex;flex-direction:column}
+.pg-card:hover{transform:translateY(-3px);filter:brightness(1.04)}
+.pg-thumb{position:relative;height:112px;background:var(--card2);display:grid;place-items:center}
+.pg-thumb img{width:100%;height:100%;object-fit:cover}
+.pg-thumb .ico{width:54px;height:54px;border-radius:14px}
+.flag{position:absolute;top:9px;right:9px;font-size:11px;font-weight:700;padding:4px 9px;
+  border-radius:999px;letter-spacing:.3px}
+.flag.on{background:#1f9d5a;color:#fff}
+.flag.new{background:var(--card);color:var(--txt2);border:1px solid var(--linha)}
+.pg-body{padding:12px 13px;display:flex;align-items:center;gap:10px}
+.pg-body b{display:block;font-size:14px}
+.pg-body small{color:var(--txt2);font-size:11.5px;font-family:ui-monospace,monospace}
+.pg-acao{margin-left:auto;padding:8px 13px;border-radius:9px;font-size:12.5px;font-weight:600;
+  background:var(--c);color:#fff;white-space:nowrap}
+.pg-acao.sec{background:var(--card2);color:var(--txt);border:1px solid var(--linha)}
+
+/* ---------- builder ---------- */
+.builder{display:none;position:fixed;inset:0;z-index:80;background:var(--bg);flex-direction:column}
+.builder.on{display:flex}
+.b-topo{display:flex;align-items:center;gap:11px;padding:11px 18px;
+  background:var(--card);border-bottom:1px solid var(--linha)}
+.b-topo .tit{font-weight:650;font-size:15px}
+.b-topo .sub{color:var(--txt2);font-size:12px;font-family:ui-monospace,monospace}
+.b-acoes{margin-left:auto;display:flex;gap:8px}
+.b-btn{padding:9px 15px;border-radius:9px;font-size:13.5px;font-weight:600;
+  border:1px solid var(--linha);background:var(--card2)}
+.b-btn:hover{filter:brightness(1.1)}
+.b-btn.principal{background:var(--c);border-color:var(--c);color:#fff}
+.b-corpo{flex:1;display:grid;grid-template-columns:370px 1fr;overflow:hidden}
+.b-editor{overflow-y:auto;padding:18px;border-right:1px solid var(--linha);background:var(--card)}
+.b-preview{overflow-y:auto;background:var(--card2);padding:22px;display:grid;justify-items:center}
+.campo-grupo{margin-bottom:15px}
+.campo-grupo textarea{min-height:70px;resize:vertical}
+.cores{display:flex;gap:7px;flex-wrap:wrap;margin-top:5px}
+.cor{width:29px;height:29px;border-radius:8px;border:2px solid transparent;cursor:pointer}
+.cor.on{border-color:var(--txt)}
+.bullets{display:flex;flex-direction:column;gap:7px}
+.bullet-linha{display:flex;gap:7px}
+.bullet-linha input{flex:1;margin:0}
+.bullet-linha button{width:36px;border-radius:9px;border:1px solid var(--linha);background:var(--card2);color:var(--txt2)}
+.bullet-linha button:hover{color:#e2574c}
+.add-bullet{width:100%;padding:9px;border-radius:9px;border:1px dashed var(--linha);
+  background:none;color:var(--txt2);font-size:13px;margin-top:7px}
+.add-bullet:hover{color:var(--txt);border-color:var(--txt2)}
+.dica{font-size:11.5px;color:var(--txt2);margin:4px 0 0}
+
+/* landing renderizada no preview */
+.lp{width:100%;max-width:430px;background:#fff;color:#16181f;border-radius:16px;
+  overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,.28);font-size:14px}
+.lp-topo{padding:30px 24px 26px;text-align:center;color:#fff;background:var(--c)}
+.lp-topo img{width:74px;height:74px;border-radius:19px;margin-bottom:13px}
+.lp-topo h1{margin:0 0 8px;font-size:23px;line-height:1.24;letter-spacing:-.4px}
+.lp-topo p{margin:0;opacity:.93;font-size:14px;line-height:1.5}
+.lp-corpo{padding:22px 24px 26px}
+.lp-corpo h3{margin:0 0 13px;font-size:15px}
+.lp-b{display:flex;gap:9px;align-items:flex-start;margin-bottom:10px;font-size:13.5px;line-height:1.45}
+.lp-b i{color:var(--c);font-weight:800;flex:0 0 auto}
+.lp-cta{display:block;width:100%;margin-top:19px;padding:15px;border-radius:11px;
+  background:var(--c);color:#fff;font-weight:700;font-size:15.5px;text-align:center;
+  text-decoration:none;border:0;cursor:pointer}
+.lp-rodape{text-align:center;font-size:11px;color:#8a8f9e;padding:0 24px 20px}
+@media(max-width:900px){.b-corpo{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+  .b-editor{border-right:0;border-bottom:1px solid var(--linha);max-height:44vh}}
+@media(max-width:600px){.conteudo{padding:20px 14px 50px}.marca span{display:none}
+  .nome-usuario{display:none}.caixa{padding:22px}.nav button{padding:7px 11px;font-size:13px}}
+</style></head><body>
+
+<header class="topo">
+  <div class="marca">Area de Membros <span>__TOTAL__ apps</span></div>
+  <nav class="nav">
+    <button data-pag="apps" class="on">Apps</button>
+    <button data-pag="criativos">Criativos</button>
+    <button data-pag="paginas">Paginas</button>
+  </nav>
+  <button class="icone-btn" id="btn-tema" title="Alternar tema">&#9788;</button>
+  <button class="usuario" id="btn-usuario" title="Clique para trocar o nome">
+    <span class="avatar" id="avatar">?</span>
+    <span class="nome-usuario" id="nome-usuario">Membro</span>
+  </button>
+</header>
+
+<main class="conteudo">
+  <section class="pagina on" data-pag="apps">
+    <h1 class="titulo-pg">Seus aplicativos</h1>
+    <p class="sub-pg">Escolha uma categoria ou abra o menu lateral para ver todos.</p>
+    <div id="categorias"></div>
+  </section>
+
+  <section class="pagina" data-pag="criativos">
+    <h1 class="titulo-pg">Criativos</h1>
+    <p class="sub-pg">__TOTAL_ADS__ videos de anuncio em __APPS_ADS__ apps. Baixe um por vez ou todos do app.</p>
+    <div class="filtros" id="filtros"></div>
+    <div id="lista-criativos"></div>
+  </section>
+
+  <section class="pagina" data-pag="paginas">
+    <h1 class="titulo-pg">Gerar Pagina</h1>
+    <p class="sub-pg">__COM_PAGINA__ apps ja tem pagina de venda. Escolha um app para criar ou editar.</p>
+    <input class="busca" id="busca-pg" placeholder="Buscar pagina pelo nome..."
+           autocomplete="off" style="margin:0 0 14px;width:100%;max-width:380px">
+    <div class="filtros" id="filtros-pg"></div>
+    <div class="grade" id="lista-paginas"></div>
+  </section>
+</main>
+
+<div class="builder" id="builder">
+  <div class="b-topo">
+    <button class="b-btn" onclick="fecharBuilder()">&larr; Voltar</button>
+    <span><span class="tit" id="b-titulo">App</span>
+      <span class="sub" id="b-sub"></span></span>
+    <div class="b-acoes">
+      <button class="b-btn" onclick="exportarPagina()">Exportar HTML</button>
+      <button class="b-btn principal" onclick="salvarPagina()">Salvar</button>
+    </div>
+  </div>
+  <div class="b-corpo">
+    <div class="b-editor" id="b-editor"></div>
+    <div class="b-preview"><div class="lp" id="b-preview"></div></div>
+  </div>
+</div>
+
+<div class="veu" id="veu"></div>
+
+<aside class="lateral" id="lateral">
+  <div class="cab-lat">
+    <h3 id="titulo-lat">Todos os apps</h3>
+    <button class="icone-btn" id="fechar-lat">&times;</button>
+  </div>
+  <input class="busca" id="busca" placeholder="Buscar app..." autocomplete="off">
+  <div class="lista" id="lista"></div>
+</aside>
+
+<div class="modal" id="modal"><div class="caixa" id="caixa"></div></div>
+
+<script>
+const DADOS = __DADOS__;
+const PALETA = ['#e2574c','#e8a13a','#3fb37f','#4a9ee2','#7c6cf0','#d05ca8','#2fa8a0','#c0873c'];
+const $ = s => document.querySelector(s);
+const esc = t => String(t).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const icone = slug => 'apps/' + slug + '/icon-192.png';
+const ls = { get:(k,d)=>{try{return localStorage.getItem(k)??d}catch(e){return d}},
+             set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}} };
+
+/* ---------- tema ---------- */
+function aplicarTema(t){
+  document.documentElement.dataset.tema = t;
+  $('#btn-tema').innerHTML = t === 'escuro' ? '&#9788;' : '&#9789;';
+  ls.set('tema', t);
+}
+$('#btn-tema').onclick = () =>
+  aplicarTema(document.documentElement.dataset.tema === 'escuro' ? 'claro' : 'escuro');
+aplicarTema(ls.get('tema','escuro'));
+
+/* ---------- usuario ---------- */
+function corDoNome(nome){
+  let h = 0;
+  for (const ch of nome) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  return PALETA[h % PALETA.length];
+}
+function aplicarUsuario(nome){
+  nome = (nome || '').trim() || 'Membro';
+  $('#nome-usuario').textContent = nome;
+  const av = $('#avatar');
+  av.textContent = [...nome][0].toUpperCase();
+  av.style.background = corDoNome(nome);
+  ls.set('usuario', nome);
+}
+$('#btn-usuario').onclick = () => {
+  const n = prompt('Nome do usuario:', $('#nome-usuario').textContent);
+  if (n !== null) aplicarUsuario(n);
+};
+aplicarUsuario(ls.get('usuario','Membro'));
+
+/* ---------- nome customizado do app ---------- */
+const nomeDe = a => ls.get('nome:' + a.slug, a.nome);
+
+/* ---------- categorias ---------- */
+function pintarCategorias(){
+  $('#categorias').innerHTML = DADOS.map(c => `
+  <section class="categoria">
+    <div class="cab-cat">
+      <span class="bolha" style="background:${c.cor}22;color:${c.cor}">${c.icone}</span>
+      <h2 class="nome-cat">${esc(c.nome)}</h2>
+      <span class="contador">${c.apps.length}</span>
+      <button class="hamburguer" data-cat="${c.id}" title="Ver todos na barra lateral">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="grade">
+      ${c.apps.map(a => `
+        <button class="app" style="--c:${a.cor}" data-slug="${a.slug}">
+          <img src="${icone(a.slug)}" alt="" loading="lazy">
+          <span><b>${esc(nomeDe(a))}</b><small>${esc(a.desc)}</small></span>
+        </button>`).join('')}
+    </div>
+  </section>`).join('');
+
+  document.querySelectorAll('.hamburguer').forEach(b =>
+    b.onclick = () => abrirLateral(b.dataset.cat));
+  document.querySelectorAll('.app').forEach(b =>
+    b.onclick = () => abrirModal(b.dataset.slug));
+}
+
+/* ---------- barra lateral ---------- */
+let catAtiva = null;
+function abrirLateral(catId){
+  catAtiva = catId;
+  const c = DADOS.find(x => x.id === catId);
+  $('#titulo-lat').textContent = c ? c.nome : 'Todos os apps';
+  $('#busca').value = '';
+  pintarLista('');
+  $('#lateral').classList.add('on');
+  $('#veu').classList.add('on');
+  setTimeout(() => $('#busca').focus(), 220);
+}
+function fecharLateral(){
+  $('#lateral').classList.remove('on');
+  $('#veu').classList.remove('on');
+}
+function pintarLista(filtro){
+  const f = filtro.trim().toLowerCase();
+  const grupos = DADOS.map(c => {
+    const apps = c.apps.filter(a =>
+      !f || nomeDe(a).toLowerCase().includes(f) || a.slug.includes(f));
+    return { c, apps };
+  }).filter(g => g.apps.length);
+
+  // categoria de origem primeiro
+  grupos.sort((a, b) => (b.c.id === catAtiva) - (a.c.id === catAtiva));
+
+  $('#lista').innerHTML = grupos.length ? grupos.map(g => `
+    <div class="grupo-lat">
+      <h4>${g.c.icone} ${esc(g.c.nome)} &middot; ${g.apps.length}</h4>
+      ${g.apps.map(a => `
+        <button class="item" style="--c:${a.cor}" data-slug="${a.slug}">
+          <span class="p"></span>
+          <img src="${icone(a.slug)}" alt="" loading="lazy">
+          <span>${esc(nomeDe(a))}</span>
+        </button>`).join('')}
+    </div>`).join('')
+    : '<p class="vazio">Nenhum app encontrado.</p>';
+
+  document.querySelectorAll('#lista .item').forEach(b =>
+    b.onclick = () => { fecharLateral(); abrirModal(b.dataset.slug); });
+}
+$('#busca').oninput = e => pintarLista(e.target.value);
+$('#fechar-lat').onclick = fecharLateral;
+$('#veu').onclick = fecharLateral;
+
+/* ---------- modal ---------- */
+function achar(slug){
+  for (const c of DADOS) {
+    const a = c.apps.find(x => x.slug === slug);
+    if (a) return { a, c };
+  }
+  return null;
+}
+function abrirModal(slug){
+  const achado = achar(slug);
+  if (!achado) return;
+  const { a, c } = achado;
+  $('#caixa').style.setProperty('--c', a.cor);
+  $('#caixa').innerHTML = `
+    <button class="fechar" onclick="fecharModal()">&times;</button>
+    <img src="${icone(a.slug)}" alt="">
+    <h2>${esc(nomeDe(a))}</h2>
+    <span class="cat-tag">${c.icone} ${esc(c.nome)}</span>
+    <p>${esc(a.desc)}</p>
+    <div class="acoes">
+      <button class="btn principal" onclick="verApp('${a.slug}')">Ver</button>
+      <button class="btn" onclick="editarApp('${a.slug}')">Editar</button>
+    </div>`;
+  $('#modal').classList.add('on');
+}
+function fecharModal(){ $('#modal').classList.remove('on'); }
+$('#modal').onclick = e => { if (e.target.id === 'modal') fecharModal(); };
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { fecharModal(); fecharLateral(); }
+});
+
+function verApp(slug){ window.open('apps/' + slug + '/index.html', '_blank'); }
+
+function editarApp(slug){
+  const { a, c } = achar(slug);
+  $('#caixa').innerHTML = `
+    <button class="fechar" onclick="fecharModal()">&times;</button>
+    <img src="${icone(a.slug)}" alt="">
+    <h2>Editar app</h2>
+    <span class="cat-tag">${c.icone} ${esc(c.nome)}</span>
+    <div style="margin-top:20px">
+      <label class="rotulo" for="campo-nome">Nome do app</label>
+      <input class="campo" id="campo-nome" value="${esc(nomeDe(a))}">
+      <p class="slug">${esc(a.slug)}</p>
+    </div>
+    <div class="acoes">
+      <button class="btn" onclick="abrirModal('${a.slug}')">Voltar</button>
+      <button class="btn principal" onclick="salvarNome('${a.slug}')">Salvar</button>
+    </div>
+    <p class="aviso">Protótipo: salva só neste navegador.</p>`;
+  setTimeout(() => $('#campo-nome').focus(), 60);
+}
+function salvarNome(slug){
+  const v = $('#campo-nome').value.trim();
+  const { a } = achar(slug);
+  ls.set('nome:' + slug, v || a.nome);
+  pintarCategorias();
+  abrirModal(slug);
+}
+
+/* ---------- navegacao entre paginas ---------- */
+function irPara(p){
+  document.querySelectorAll('.nav button').forEach(b => b.classList.toggle('on', b.dataset.pag === p));
+  document.querySelectorAll('.pagina').forEach(s => s.classList.toggle('on', s.dataset.pag === p));
+  ls.set('pagina', p);
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll('.nav button').forEach(b => b.onclick = () => irPara(b.dataset.pag));
+
+/* ---------- criativos ---------- */
+let filtroCat = 'todos';
+
+function baixarUm(url, nome){
+  window.open(url, '_blank');
+}
+function baixarTodos(slug){
+  const { a } = achar(slug);
+  a.ads.forEach((ad, i) =>
+    setTimeout(() => baixarUm(ad.url, slug + '-ads' + ad.n + '.mp4'), i * 800));
+}
+function assistir(url){ window.open(url, '_blank'); }
+
+function pintarFiltros(){
+  const total = DADOS.reduce((n, c) => n + c.apps.filter(a => a.ads.length).length, 0);
+  $('#filtros').innerHTML =
+    `<button class="chip${filtroCat === 'todos' ? ' on' : ''}" data-f="todos">Todos &middot; ${total}</button>` +
+    DADOS.map(c => {
+      const n = c.apps.filter(a => a.ads.length).length;
+      return n ? `<button class="chip${filtroCat === c.id ? ' on' : ''}" data-f="${c.id}">${c.icone} ${esc(c.nome)} &middot; ${n}</button>` : '';
+    }).join('');
+  document.querySelectorAll('#filtros .chip').forEach(b =>
+    b.onclick = () => { filtroCat = b.dataset.f; pintarFiltros(); pintarCriativos(); });
+}
+
+function pintarCriativos(){
+  const cats = DADOS.filter(c => filtroCat === 'todos' || c.id === filtroCat);
+  const linhas = [];
+  for (const c of cats) {
+    for (const a of c.apps) {
+      const mb = a.ads.reduce((s, x) => s + x.mb, 0).toFixed(1);
+      linhas.push(`
+      <div class="criativo" style="--c:${a.cor}">
+        <div class="cab-cri">
+          <img src="${icone(a.slug)}" alt="" loading="lazy">
+          <span>
+            <b>${esc(nomeDe(a))}</b>
+            <small>${c.icone} ${esc(c.nome)}${a.ads.length ? ' &middot; ' + a.ads.length + ' video(s) &middot; ' + mb + ' MB' : ''}</small>
+          </span>
+          ${a.ads.length ? `<button class="btn-todos" data-todos="${a.slug}">&#8681; Baixar todos</button>` : ''}
+        </div>
+        ${a.ads.length ? `<div class="videos">${a.ads.map(ad => `
+          <div class="video">
+            <span class="num">${ad.n}</span>
+            <button data-ver="${ad.url}">Ver</button>
+            <button data-baixar="${ad.url}" data-nome="${a.slug}-ads${ad.n}.mp4">Baixar</button>
+            <span class="peso">${ad.mb} MB</span>
+          </div>`).join('')}</div>`
+        : '<p class="sem-ads">Nenhum criativo publicado para este app.</p>'}
+      </div>`);
+    }
+  }
+  $('#lista-criativos').innerHTML = linhas.join('') || '<p class="vazio">Nada por aqui.</p>';
+
+  document.querySelectorAll('[data-todos]').forEach(b => b.onclick = () => baixarTodos(b.dataset.todos));
+  document.querySelectorAll('[data-ver]').forEach(b => b.onclick = () => assistir(b.dataset.ver));
+  document.querySelectorAll('[data-baixar]').forEach(b =>
+    b.onclick = () => baixarUm(b.dataset.baixar, b.dataset.nome));
+}
+
+/* ================= PAGINAS ================= */
+const PALETA_LP = ['#e2574c','#e8a13a','#3fb37f','#4a9ee2','#7c6cf0','#d05ca8','#2fa8a0','#16181f'];
+let filtroPg = 'todos', buscaPg = '';
+
+const todosApps = () => DADOS.flatMap(c => c.apps.map(a => ({ ...a, cat: c })));
+const temPaginaSalva = slug => ls.get('pagina-lp:' + slug, null) !== null;
+const publicada = a => a.temPagina || temPaginaSalva(a.slug);
+
+function padraoDaPagina(a){
+  return {
+    headline: nomeDe(a),
+    sub: a.desc || 'Transforme sua rotina com um app feito para voce.',
+    cta: 'Quero comecar agora',
+    checkout: '',
+    cor: a.cor || '#4a9ee2',
+    bullets: ['Acesso imediato e vitalicio',
+              'Conteudo exclusivo, direto ao ponto',
+              'Funciona no celular, sem instalar nada'],
+  };
+}
+function carregarPagina(slug){
+  const { a } = achar(slug);
+  const salvo = ls.get('pagina-lp:' + slug, null);
+  return salvo ? { ...padraoDaPagina(a), ...JSON.parse(salvo) } : padraoDaPagina(a);
+}
+
+function pintarFiltrosPg(){
+  const todos = todosApps();
+  const com = todos.filter(publicada).length;
+  const opcoes = [['todos','Todos',todos.length],
+                  ['existing','Com Pagina',com],
+                  ['generate','Gerar Nova',todos.length - com]];
+  $('#filtros-pg').innerHTML = opcoes.map(([id,rot,n]) =>
+    `<button class="chip${filtroPg===id?' on':''}" data-fp="${id}">${rot} &middot; ${n}</button>`).join('');
+  document.querySelectorAll('#filtros-pg .chip').forEach(b =>
+    b.onclick = () => { filtroPg = b.dataset.fp; pintarFiltrosPg(); pintarPaginas(); });
+}
+
+function pintarPaginas(){
+  const f = buscaPg.trim().toLowerCase();
+  const lista = todosApps().filter(a => {
+    if (filtroPg === 'existing' && !publicada(a)) return false;
+    if (filtroPg === 'generate' && publicada(a)) return false;
+    return !f || nomeDe(a).toLowerCase().includes(f) || a.slug.includes(f);
+  });
+  $('#lista-paginas').innerHTML = lista.length ? lista.map(a => {
+    const ok = publicada(a);
+    return `
+    <div class="pg-card" style="--c:${a.cor}" data-abrir="${a.slug}">
+      <div class="pg-thumb">
+        <img src="${icone(a.slug)}" alt="" class="ico" loading="lazy">
+        <span class="flag ${ok ? 'on' : 'new'}">${ok ? 'Com Pagina' : 'Gerar Nova'}</span>
+      </div>
+      <div class="pg-body">
+        <span><b>${esc(nomeDe(a))}</b><small>#${a.num} &middot; ${esc(a.catOrig)}</small></span>
+        <span class="pg-acao${ok ? ' sec' : ''}">${ok ? 'Editar' : 'Gerar'}</span>
+      </div>
+    </div>`;
+  }).join('') : '<p class="vazio">Nenhuma pagina encontrada.</p>';
+  document.querySelectorAll('[data-abrir]').forEach(b =>
+    b.onclick = () => abrirBuilder(b.dataset.abrir));
+}
+$('#busca-pg').oninput = e => { buscaPg = e.target.value; pintarPaginas(); };
+
+/* ================= BUILDER ================= */
+let slugAtual = null, pg = null;
+
+function abrirBuilder(slug){
+  slugAtual = slug;
+  pg = carregarPagina(slug);
+  const { a, c } = achar(slug);
+  $('#b-titulo').textContent = nomeDe(a);
+  $('#b-sub').textContent = '#' + a.num + ' · ' + c.nome;
+  pintarEditor();
+  pintarPreview();
+  $('#builder').classList.add('on');
+  document.body.style.overflow = 'hidden';
+}
+function fecharBuilder(){
+  $('#builder').classList.remove('on');
+  document.body.style.overflow = '';
+  slugAtual = null;
+  pintarFiltrosPg();
+  pintarPaginas();
+}
+
+function pintarEditor(){
+  $('#b-editor').innerHTML = `
+    <div class="campo-grupo">
+      <label class="rotulo">Titulo principal</label>
+      <input class="campo" id="f-headline" value="${esc(pg.headline)}">
+    </div>
+    <div class="campo-grupo">
+      <label class="rotulo">Subtitulo</label>
+      <textarea class="campo" id="f-sub">${esc(pg.sub)}</textarea>
+    </div>
+    <div class="campo-grupo">
+      <label class="rotulo">Beneficios</label>
+      <div class="bullets" id="f-bullets">
+        ${pg.bullets.map((b,i) => `
+          <div class="bullet-linha">
+            <input class="campo" data-bullet="${i}" value="${esc(b)}">
+            <button data-remove="${i}" title="Remover">&times;</button>
+          </div>`).join('')}
+      </div>
+      <button class="add-bullet" id="add-bullet">+ Adicionar beneficio</button>
+    </div>
+    <div class="campo-grupo">
+      <label class="rotulo">Texto do botao</label>
+      <input class="campo" id="f-cta" value="${esc(pg.cta)}">
+    </div>
+    <div class="campo-grupo">
+      <label class="rotulo">Link de checkout</label>
+      <input class="campo" id="f-checkout" value="${esc(pg.checkout)}" placeholder="https://...">
+      <p class="dica">Onde o botao leva. Em branco = botao inativo.</p>
+    </div>
+    <div class="campo-grupo">
+      <label class="rotulo">Cor principal</label>
+      <div class="cores" id="f-cores">
+        ${PALETA_LP.map(c => `<span class="cor${c===pg.cor?' on':''}" data-cor="${c}" style="background:${c}"></span>`).join('')}
+      </div>
+    </div>`;
+
+  const liga = (id, campo) => {
+    $('#' + id).oninput = e => { pg[campo] = e.target.value; pintarPreview(); };
+  };
+  liga('f-headline','headline'); liga('f-sub','sub');
+  liga('f-cta','cta'); liga('f-checkout','checkout');
+
+  document.querySelectorAll('[data-bullet]').forEach(inp =>
+    inp.oninput = e => { pg.bullets[+e.target.dataset.bullet] = e.target.value; pintarPreview(); });
+  document.querySelectorAll('[data-remove]').forEach(b =>
+    b.onclick = () => { pg.bullets.splice(+b.dataset.remove, 1); pintarEditor(); pintarPreview(); });
+  $('#add-bullet').onclick = () => { pg.bullets.push('Novo beneficio'); pintarEditor(); pintarPreview(); };
+  document.querySelectorAll('[data-cor]').forEach(s =>
+    s.onclick = () => { pg.cor = s.dataset.cor; pintarEditor(); pintarPreview(); });
+}
+
+function corpoLanding(){
+  const { a } = achar(slugAtual);
+  const btn = pg.checkout
+    ? `<a class="lp-cta" href="${esc(pg.checkout)}" target="_blank" rel="noopener">${esc(pg.cta)}</a>`
+    : `<button class="lp-cta" type="button">${esc(pg.cta)}</button>`;
+  return `
+  <div class="lp-topo">
+    <img src="${icone(a.slug)}" alt="">
+    <h1>${esc(pg.headline)}</h1>
+    <p>${esc(pg.sub)}</p>
+  </div>
+  <div class="lp-corpo">
+    <h3>O que voce recebe</h3>
+    ${pg.bullets.filter(b => b.trim()).map(b => `<div class="lp-b"><i>&#10003;</i><span>${esc(b)}</span></div>`).join('')}
+    ${btn}
+  </div>
+  <p class="lp-rodape">Pagamento unico &middot; Acesso imediato</p>`;
+}
+function pintarPreview(){
+  const box = $('#b-preview');
+  box.style.setProperty('--c', pg.cor);
+  box.innerHTML = corpoLanding();
+}
+
+function salvarPagina(){
+  ls.set('pagina-lp:' + slugAtual, JSON.stringify(pg));
+  const b = document.querySelector('.b-acoes .principal');
+  const antes = b.textContent;
+  b.textContent = 'Salvo!';
+  setTimeout(() => { b.textContent = antes; }, 1400);
+}
+
+function htmlDaPagina(){
+  const { a } = achar(slugAtual);
+  const css = [...document.querySelectorAll('style')].map(s => s.textContent).join('\n');
+  const lp = css.split('/* landing renderizada no preview */')[1] || '';
+  return `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${esc(pg.headline)}</title><style>
+*{box-sizing:border-box}
+body{margin:0;background:#eef0f5;font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;
+  display:grid;place-items:start center;padding:26px 16px;min-height:100vh}
+${lp.split('@media')[0]}
+.lp{--c:${pg.cor};box-shadow:0 8px 28px rgba(0,0,0,.14)}
+</style></head><body>
+<div class="lp">${corpoLanding()}</div>
+</body></html>`;
+}
+function exportarPagina(){
+  const blob = new Blob([htmlDaPagina()], { type: 'text/html;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = slugAtual + '-pagina.html';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+}
+
+pintarCategorias();
+pintarFiltros();
+pintarCriativos();
+pintarFiltrosPg();
+pintarPaginas();
+irPara(ls.get('pagina','apps'));
+</script></body></html>'''
+
+saida = (HTML
+         .replace('__DADOS__', json.dumps(dados, ensure_ascii=False))
+         .replace('__TOTAL_ADS__', str(TOTAL_ADS))
+         .replace('__APPS_ADS__', str(APPS_COM_ADS))
+         .replace('__COM_PAGINA__', str(COM_PAGINA))
+         .replace('__TOTAL__', str(TOTAL)))
+open(os.path.join(BASE, 'membros.html'), 'w', encoding='utf-8').write(saida)
+print('membros.html gerado — %d apps em %d categorias' % (TOTAL, len(dados)))

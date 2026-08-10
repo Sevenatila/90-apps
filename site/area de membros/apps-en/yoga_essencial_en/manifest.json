@@ -1,0 +1,31 @@
+{
+    "id": "./",
+    "name": "Yoga",
+    "short_name": "Yoga",
+    "description": "Discover the transformative power of yoga. Practice anywhere with guided classes, meditations, and ancient wisdom. Ideal for beginners and advanced students.",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#0f0f1a",
+    "theme_color": "#8e44ad",
+    "lang": "en",
+    "categories": [
+        "lifestyle",
+        "health"
+    ],
+    "icons": [
+        {
+            "src": "icon-192.png?v=121e5b8e",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon-512.png?v=121e5b8e",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ]
+}

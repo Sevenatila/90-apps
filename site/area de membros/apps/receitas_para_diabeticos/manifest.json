@@ -1,0 +1,31 @@
+{
+    "id": "./",
+    "name": "Receitas para Diabeticos",
+    "short_name": "Receitas Diabeticos",
+    "description": "Descubra receitas deliciosas e seguras para diabeticos. Aprenda a controlar a glicemia sem abrir mao do sabor. Cardapios completos, dicas de nutricao e muito mais.",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#0f0f1a",
+    "theme_color": "#2ecc71",
+    "lang": "pt-BR",
+    "categories": [
+        "lifestyle",
+        "health"
+    ],
+    "icons": [
+        {
+            "src": "icon-192.png?v=dde5e644",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon-512.png?v=dde5e644",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ]
+}

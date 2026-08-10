@@ -1,0 +1,31 @@
+{
+    "id": "./",
+    "name": "La espiritualidad en acción",
+    "short_name": "Espiritualidad",
+    "description": "Una aplicación para fortalecer tu camino espiritual con prácticas diarias, meditaciones, estudios bíblicos y contenido inspirador.",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#0f0f1a",
+    "theme_color": "#6a4e9b",
+    "lang": "es",
+    "categories": [
+        "lifestyle",
+        "health"
+    ],
+    "icons": [
+        {
+            "src": "icon-192.png?v=c8eaefbd",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon-512.png?v=c8eaefbd",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ]
+}

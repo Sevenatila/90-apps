@@ -1,0 +1,31 @@
+{
+    "id": "./",
+    "name": "WhatsApp Sales",
+    "short_name": "WhatsApp Sales",
+    "description": "Learn proven techniques to increase your sales using WhatsApp. From basic to advanced, discover how to convert conversations into customers.",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#0f0f1a",
+    "theme_color": "#25D366",
+    "lang": "en",
+    "categories": [
+        "lifestyle",
+        "health"
+    ],
+    "icons": [
+        {
+            "src": "icon-192.png?v=cf62ac37",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon-512.png?v=cf62ac37",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ]
+}

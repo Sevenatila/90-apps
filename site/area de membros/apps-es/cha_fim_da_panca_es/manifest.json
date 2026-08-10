@@ -1,0 +1,31 @@
+{
+    "id": "./",
+    "name": "Té Quemagrasas",
+    "short_name": "Fin de la Panca",
+    "description": "Descubre el poder de los tés naturales para perder peso, desintoxicarte y transformar tu cuerpo, aportándote salud y energía.",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#0f0f1a",
+    "theme_color": "#2e7d32",
+    "lang": "es",
+    "categories": [
+        "lifestyle",
+        "health"
+    ],
+    "icons": [
+        {
+            "src": "icon-192.png?v=f67b4b08",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon-512.png?v=f67b4b08",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ]
+}

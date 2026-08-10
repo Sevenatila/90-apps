@@ -1,0 +1,31 @@
+{
+    "id": "./",
+    "name": "Steel ABS",
+    "short_name": "Steel Belly",
+    "description": "Specific training to develop strong and defined abs. Progressive exercises, nutrition, and mindset to achieve six-pack abs.",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#0f0f1a",
+    "theme_color": "#e67e22",
+    "lang": "en",
+    "categories": [
+        "lifestyle",
+        "health"
+    ],
+    "icons": [
+        {
+            "src": "icon-192.png?v=bec8b35a",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon-512.png?v=bec8b35a",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ]
+}

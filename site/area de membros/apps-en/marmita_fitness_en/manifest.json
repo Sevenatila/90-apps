@@ -1,0 +1,31 @@
+{
+    "id": "./",
+    "name": "Fitness Meal Prep",
+    "short_name": "Fit Meal Prep",
+    "description": "Discover how to prepare healthy, tasty meals that fit into your routine. Recipes, planning, and nutrition tips for a healthier life.",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#0f0f1a",
+    "theme_color": "#4CAF50",
+    "lang": "en",
+    "categories": [
+        "lifestyle",
+        "health"
+    ],
+    "icons": [
+        {
+            "src": "icon-192.png?v=e3251729",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon-512.png?v=e3251729",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ]
+}

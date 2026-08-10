@@ -1,0 +1,31 @@
+{
+    "id": "./",
+    "name": "Sopa Termogenica",
+    "short_name": "Sopa Termo",
+    "description": "Descubra o poder das sopas termogenicas para acelerar o metabolismo, queimar gordura e emagrecer com saude. Receitas faceis, nutritivas e deliciosas.",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#0f0f1a",
+    "theme_color": "#f97316",
+    "lang": "pt-BR",
+    "categories": [
+        "lifestyle",
+        "health"
+    ],
+    "icons": [
+        {
+            "src": "icon-192.png?v=a59e968b",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon-512.png?v=a59e968b",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ]
+}

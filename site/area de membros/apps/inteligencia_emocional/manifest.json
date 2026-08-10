@@ -1,0 +1,31 @@
+{
+    "id": "./",
+    "name": "Inteligencia Emocional",
+    "short_name": "IntelEmoc",
+    "description": "Descubra o poder da inteligencia emocional. Aprenda a reconhecer, compreender e gerenciar suas emocoes para uma vida mais equilibrada e satisfatoria. Desenvolva autoconhecimento, empatia e habilidades sociais.",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#0f0f1a",
+    "theme_color": "#4A90E2",
+    "lang": "pt-BR",
+    "categories": [
+        "lifestyle",
+        "health"
+    ],
+    "icons": [
+        {
+            "src": "icon-192.png?v=ba861532",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon-512.png?v=ba861532",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ]
+}

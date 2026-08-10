@@ -1,0 +1,31 @@
+{
+    "id": "./",
+    "name": "Pastel gourmet",
+    "short_name": "Pastel gourmet",
+    "description": "Aprende a elaborar exquisitos pasteles gourmet con recetas exclusivas, técnicas profesionales y consejos de negocios. Convierte tu pasión en una fuente de ingresos.",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#0f0f1a",
+    "theme_color": "#c96f3d",
+    "lang": "es",
+    "categories": [
+        "lifestyle",
+        "health"
+    ],
+    "icons": [
+        {
+            "src": "icon-192.png?v=890a0601",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon-512.png?v=890a0601",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ]
+}

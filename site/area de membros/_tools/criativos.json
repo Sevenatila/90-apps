@@ -1,0 +1,527 @@
+{
+ "antiestresse_app": {
+  "criativo": "antiestresse",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/antiestresse/ads1.mp4",
+    "bytes": 6594887
+   }
+  ]
+ },
+ "astrologia": {
+  "criativo": "astrologia",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/astrologia/ads1.mp4",
+    "bytes": 6976136
+   }
+  ]
+ },
+ "cardio_em_casa": {
+  "criativo": "cardioemcasa",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/cardioemcasa/ads1.mp4",
+    "bytes": 7991001
+   }
+  ]
+ },
+ "dieta_cetogenica": {
+  "criativo": "cetogenica",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/cetogenica/ads1.mp4",
+    "bytes": 8553628
+   }
+  ]
+ },
+ "bolo_gourmet": {
+  "criativo": "bologourmet",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/bologourmet/ads1.mp4",
+    "bytes": 15985063
+   },
+   {
+    "n": 2,
+    "url": "https://eva.igorstorm.com/criativos/bologourmet/ads2.mp4",
+    "bytes": 18512349
+   }
+  ]
+ },
+ "cha_fim_da_panca": {
+  "criativo": "cha",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/cha/ads1.mp4",
+    "bytes": 5371150
+   },
+   {
+    "n": 2,
+    "url": "https://eva.igorstorm.com/criativos/cha/ads2.mp4",
+    "bytes": 5537805
+   }
+  ]
+ },
+ "espiritualidade_em_acao": {
+  "criativo": "espiritualidadeemacao",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/espiritualidadeemacao/ads1.mp4",
+    "bytes": 5982996
+   }
+  ]
+ },
+ "copywriter_pro": {
+  "criativo": "copywriter",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/copywriter/ads1.mp4",
+    "bytes": 7457621
+   }
+  ]
+ },
+ "anti_insonia": {
+  "criativo": "antiinsonia",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/antiinsonia/ads1.mp4",
+    "bytes": 20590265
+   },
+   {
+    "n": 2,
+    "url": "https://eva.igorstorm.com/criativos/antiinsonia/ads2.mp4",
+    "bytes": 20605706
+   },
+   {
+    "n": 3,
+    "url": "https://eva.igorstorm.com/criativos/antiinsonia/ads3.mp4",
+    "bytes": 20622674
+   }
+  ]
+ },
+ "freelancer_digital": {
+  "criativo": "freelancerdigital",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/freelancerdigital/ads1.mp4",
+    "bytes": 7581215
+   }
+  ]
+ },
+ "doces_sem_acucar": {
+  "criativo": "docessemacucar",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/docessemacucar/ads1.mp4",
+    "bytes": 9703070
+   }
+  ]
+ },
+ "expert_trafego_pago": {
+  "criativo": "expertemtrafegopago",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/expertemtrafegopago/ads1.mp4",
+    "bytes": 6905158
+   }
+  ]
+ },
+ "brigadeiros_gourmet": {
+  "criativo": "brigadeirosgourmet",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/brigadeirosgourmet/ads1.mp4",
+    "bytes": 16472320
+   },
+   {
+    "n": 2,
+    "url": "https://eva.igorstorm.com/criativos/brigadeirosgourmet/ads2.mp4",
+    "bytes": 17290621
+   },
+   {
+    "n": 3,
+    "url": "https://eva.igorstorm.com/criativos/brigadeirosgourmet/ads3.mp4",
+    "bytes": 17287185
+   }
+  ]
+ },
+ "jejum_intermitente": {
+  "criativo": "jejumintermitente",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/jejumintermitente/ads1.mp4",
+    "bytes": 6677409
+   }
+  ]
+ },
+ "iogurte_gourmet": {
+  "criativo": "iogurtegourmet",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/iogurtegourmet/ads1.mp4",
+    "bytes": 7505682
+   }
+  ]
+ },
+ "lucrando_com_ia": {
+  "criativo": "lucrandocomia",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/lucrandocomia/ads1.mp4",
+    "bytes": 7092204
+   }
+  ]
+ },
+ "app_cristao": {
+  "criativo": "cristao",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/cristao/ads1.mp4",
+    "bytes": 4605676
+   },
+   {
+    "n": 2,
+    "url": "https://eva.igorstorm.com/criativos/cristao/ads2.mp4",
+    "bytes": 4833222
+   },
+   {
+    "n": 3,
+    "url": "https://eva.igorstorm.com/criativos/cristao/ads3.mp4",
+    "bytes": 4711491
+   }
+  ]
+ },
+ "geladinho_gourmet": {
+  "criativo": "geladinho",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/geladinho/ads1.mp4",
+    "bytes": 5396717
+   },
+   {
+    "n": 2,
+    "url": "https://eva.igorstorm.com/criativos/geladinho/ads2.mp4",
+    "bytes": 6347643
+   }
+  ]
+ },
+ "poder_da_oracao": {
+  "criativo": "poderdaoracao",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/poderdaoracao/ads1.mp4",
+    "bytes": 7390350
+   }
+  ]
+ },
+ "leitura_biblia": {
+  "criativo": "leituradiariadabiblia",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/leituradiariadabiblia/ads1.mp4",
+    "bytes": 6491279
+   },
+   {
+    "n": 2,
+    "url": "https://eva.igorstorm.com/criativos/leituradiariadabiblia/ads2.mp4",
+    "bytes": 7131404
+   }
+  ]
+ },
+ "marketing_iniciante": {
+  "criativo": "marketingdigitalparainiciante",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/marketingdigitalparainiciante/ads1.mp4",
+    "bytes": 17861454
+   },
+   {
+    "n": 2,
+    "url": "https://eva.igorstorm.com/criativos/marketingdigitalparainiciante/ads2.mp4",
+    "bytes": 60989213
+   }
+  ]
+ },
+ "marmita_fitness": {
+  "criativo": "marmitafit",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/marmitafit/ads1.mp4",
+    "bytes": 9328935
+   },
+   {
+    "n": 2,
+    "url": "https://eva.igorstorm.com/criativos/marmitafit/ads2.mp4",
+    "bytes": 9745575
+   }
+  ]
+ },
+ "inteligencia_emocional": {
+  "criativo": "inteligenciaemorcional",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/inteligenciaemorcional/ads1.mp4",
+    "bytes": 18556737
+   },
+   {
+    "n": 2,
+    "url": "https://eva.igorstorm.com/criativos/inteligenciaemorcional/ads2.mp4",
+    "bytes": 18952148
+   },
+   {
+    "n": 3,
+    "url": "https://eva.igorstorm.com/criativos/inteligenciaemorcional/ads3.mp4",
+    "bytes": 17459270
+   }
+  ]
+ },
+ "gluteo_perfeito": {
+  "criativo": "gluteo",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/gluteo/ads1.mp4",
+    "bytes": 6389729
+   },
+   {
+    "n": 2,
+    "url": "https://eva.igorstorm.com/criativos/gluteo/ads2.mp4",
+    "bytes": 4575086
+   },
+   {
+    "n": 3,
+    "url": "https://eva.igorstorm.com/criativos/gluteo/ads3.mp4",
+    "bytes": 4269526
+   }
+  ]
+ },
+ "receitas_para_diabeticos": {
+  "criativo": "receitasparadiabeticos",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/receitasparadiabeticos/ads1.mp4",
+    "bytes": 7834885
+   }
+  ]
+ },
+ "matando_procrastinacao": {
+  "criativo": "procrastinacao",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/procrastinacao/ads1.mp4",
+    "bytes": 5840182
+   },
+   {
+    "n": 2,
+    "url": "https://eva.igorstorm.com/criativos/procrastinacao/ads2.mp4",
+    "bytes": 5407614
+   }
+  ]
+ },
+ "reiki_app": {
+  "criativo": "reiki",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/reiki/ads1.mp4",
+    "bytes": 7842383
+   }
+  ]
+ },
+ "rotina_produtiva": {
+  "criativo": "rotinaprodutiva",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/rotinaprodutiva/ads1.mp4",
+    "bytes": 7343427
+   }
+  ]
+ },
+ "vendas_whatsapp": {
+  "criativo": "vendasnowhatsapp",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/vendasnowhatsapp/ads1.mp4",
+    "bytes": 8713455
+   }
+  ]
+ },
+ "yoga_essencial": {
+  "criativo": "yoga",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/yoga/ads1.mp4",
+    "bytes": 5995207
+   },
+   {
+    "n": 2,
+    "url": "https://eva.igorstorm.com/criativos/yoga/ads2.mp4",
+    "bytes": 8255075
+   },
+   {
+    "n": 3,
+    "url": "https://eva.igorstorm.com/criativos/yoga/ads3.mp4",
+    "bytes": 5565954
+   }
+  ]
+ },
+ "sopa_termogenica": {
+  "criativo": "sopa",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/sopa/ads1.mp4",
+    "bytes": 4449680
+   },
+   {
+    "n": 2,
+    "url": "https://eva.igorstorm.com/criativos/sopa/ads2.mp4",
+    "bytes": 4379259
+   },
+   {
+    "n": 3,
+    "url": "https://eva.igorstorm.com/criativos/sopa/ads3.mp4",
+    "bytes": 5132297
+   }
+  ]
+ },
+ "suco_detox": {
+  "criativo": "sucodetox",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/sucodetox/ads1.mp4",
+    "bytes": 4925692
+   },
+   {
+    "n": 2,
+    "url": "https://eva.igorstorm.com/criativos/sucodetox/ads2.mp4",
+    "bytes": 4903308
+   },
+   {
+    "n": 3,
+    "url": "https://eva.igorstorm.com/criativos/sucodetox/ads3.mp4",
+    "bytes": 5583925
+   }
+  ]
+ },
+ "anti_ansiedade": {
+  "criativo": "antiansiedade",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/antiansiedade/ads1.mp4",
+    "bytes": 5117261
+   },
+   {
+    "n": 2,
+    "url": "https://eva.igorstorm.com/criativos/antiansiedade/ads2.mp4",
+    "bytes": 5318938
+   },
+   {
+    "n": 3,
+    "url": "https://eva.igorstorm.com/criativos/antiansiedade/ads3.mp4",
+    "bytes": 5630419
+   },
+   {
+    "n": 4,
+    "url": "https://eva.igorstorm.com/criativos/antiansiedade/ads4.mp4",
+    "bytes": 5924941
+   }
+  ]
+ },
+ "pilates_app": {
+  "criativo": "pilatesemcasa",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/pilatesemcasa/ads1.mp4",
+    "bytes": 6288602
+   },
+   {
+    "n": 2,
+    "url": "https://eva.igorstorm.com/criativos/pilatesemcasa/ads2.mp4",
+    "bytes": 4807760
+   },
+   {
+    "n": 3,
+    "url": "https://eva.igorstorm.com/criativos/pilatesemcasa/ads3.mp4",
+    "bytes": 6093088
+   }
+  ]
+ },
+ "calistenia_sexy": {
+  "criativo": "calisteniasexy",
+  "ads": [
+   {
+    "n": 1,
+    "url": "https://eva.igorstorm.com/criativos/calisteniasexy/ads1.mp4",
+    "bytes": 2329292
+   },
+   {
+    "n": 2,
+    "url": "https://eva.igorstorm.com/criativos/calisteniasexy/ads2.mp4",
+    "bytes": 2795231
+   },
+   {
+    "n": 3,
+    "url": "https://eva.igorstorm.com/criativos/calisteniasexy/ads3.mp4",
+    "bytes": 5513939
+   },
+   {
+    "n": 4,
+    "url": "https://eva.igorstorm.com/criativos/calisteniasexy/ads4.mp4",
+    "bytes": 4441303
+   },
+   {
+    "n": 5,
+    "url": "https://eva.igorstorm.com/criativos/calisteniasexy/ads5.mp4",
+    "bytes": 5217756
+   },
+   {
+    "n": 6,
+    "url": "https://eva.igorstorm.com/criativos/calisteniasexy/ads6.mp4",
+    "bytes": 5984738
+   },
+   {
+    "n": 7,
+    "url": "https://eva.igorstorm.com/criativos/calisteniasexy/ads7.mp4",
+    "bytes": 9638645
+   },
+   {
+    "n": 8,
+    "url": "https://eva.igorstorm.com/criativos/calisteniasexy/ads8.mp4",
+    "bytes": 6293926
+   }
+  ]
+ }
+}

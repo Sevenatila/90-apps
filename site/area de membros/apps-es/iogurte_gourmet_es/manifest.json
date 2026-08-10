@@ -1,0 +1,31 @@
+{
+    "id": "./",
+    "name": "Yogur gourmet",
+    "short_name": "Yogur",
+    "description": "Descubre el mundo del yogur gourmet: recetas artesanales, técnicas de fermentación, beneficios para la salud y mucho más. Transforma tu cocina en una fábrica de sabores.",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#0f0f1a",
+    "theme_color": "#f9a826",
+    "lang": "es",
+    "categories": [
+        "lifestyle",
+        "health"
+    ],
+    "icons": [
+        {
+            "src": "icon-192.png?v=e2b8c6e8",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon-512.png?v=e2b8c6e8",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ]
+}

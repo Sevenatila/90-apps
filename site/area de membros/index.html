@@ -1,0 +1,57 @@
+<!doctype html><html lang="pt-BR"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Área de Membros — Acesso</title>
+<style>
+:root{--bg:#0e0f16;--card:#171926;--card2:#1f2231;--linha:#2a2e40;--txt:#eef0f6;--txt2:#8d93a8;--acento:#ff7a1a}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--txt);
+  font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+.caixa{width:100%;max-width:380px;background:var(--card);border:1px solid var(--linha);
+  border-radius:18px;padding:32px 28px;text-align:center}
+.caixa h1{margin:0 0 6px;font-size:20px;letter-spacing:-.3px}
+.caixa p{margin:0 0 22px;color:var(--txt2);font-size:13.5px}
+.campo{width:100%;padding:13px 14px;border-radius:10px;border:1px solid var(--linha);
+  background:var(--card2);color:var(--txt);font:inherit;font-size:15px;text-align:center;
+  letter-spacing:.06em}
+.campo:focus{outline:2px solid var(--acento);outline-offset:-1px}
+.btn{width:100%;margin-top:12px;padding:13px;border-radius:10px;border:0;
+  background:var(--acento);color:#0b0b0d;font-weight:700;font-size:15px;cursor:pointer}
+.btn:hover{filter:brightness(1.08)}
+.erro{margin-top:12px;font-size:13px;color:#ff6b6b;min-height:16px}
+</style></head><body>
+
+<form class="caixa" id="form-acesso">
+  <h1>Área de Membros</h1>
+  <p>Digite a senha de acesso que você recebeu na confirmação da compra.</p>
+  <input class="campo" id="senha" type="password" placeholder="Senha de acesso" autocomplete="off" autofocus>
+  <button class="btn" type="submit">Entrar</button>
+  <p class="erro" id="erro"></p>
+</form>
+
+<script>
+// Senha compartilhada, entregue ao cliente na pagina de obrigado / e-mail apos a compra.
+// Para trocar: edite o valor de SENHA abaixo.
+const SENHA = "apps90-2026";
+
+const ls = { get:(k,d)=>{try{return localStorage.getItem(k)??d}catch(e){return d}},
+             set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}} };
+
+// ja autenticado nesse navegador? pula direto pro painel.
+if (ls.get('acesso90') === 'ok') location.href = 'membros.html';
+
+document.getElementById('form-acesso').addEventListener('submit', e => {
+  e.preventDefault();
+  const valor = document.getElementById('senha').value.trim();
+  if (valor === SENHA) {
+    ls.set('acesso90', 'ok');
+    location.href = 'membros.html';
+  } else {
+    document.getElementById('erro').textContent = 'Senha incorreta. Confira o material que voce recebeu na compra.';
+    document.getElementById('senha').value = '';
+    document.getElementById('senha').focus();
+  }
+});
+</script>
+</body></html>

@@ -1,0 +1,31 @@
+{
+    "id": "./",
+    "name": "Gourmet Ice Pops",
+    "short_name": "Icy treat",
+    "description": "Learn how to make delicious gourmet popsicles and turn your passion into a profitable business. Recipes, techniques, and sales strategies all in one place.",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#0f0f1a",
+    "theme_color": "#ff8c42",
+    "lang": "en",
+    "categories": [
+        "lifestyle",
+        "health"
+    ],
+    "icons": [
+        {
+            "src": "icon-192.png?v=2c2aa725",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon-512.png?v=2c2aa725",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ]
+}

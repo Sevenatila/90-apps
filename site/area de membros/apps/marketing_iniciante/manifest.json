@@ -1,0 +1,31 @@
+{
+    "id": "./",
+    "name": "Marketing Digital para Iniciante",
+    "short_name": "Marketing Iniciante",
+    "description": "Aprenda marketing digital do basico ao avancado. Estrategias de trafego, copywriting, redes sociais e muito mais para iniciantes que querem resultados reais.",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#0f0f1a",
+    "theme_color": "#0066cc",
+    "lang": "pt-BR",
+    "categories": [
+        "lifestyle",
+        "health"
+    ],
+    "icons": [
+        {
+            "src": "icon-192.png?v=37712364",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon-512.png?v=37712364",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+{
+    "id": "./",
+    "name": "Brigadeiros Gourmet",
+    "short_name": "Brigadeiros",
+    "description": "Aprenda a fazer brigadeiros gourmet perfeitos, desde o ponto certo ate embalagens para vender. Receitas exclusivas, dicas de negocio e muito mais.",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#0f0f1a",
+    "theme_color": "#8B4513",
+    "lang": "pt-BR",
+    "categories": [
+        "lifestyle",
+        "health"
+    ],
+    "icons": [
+        {
+            "src": "icon-192.png?v=3e89e413",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon-512.png?v=3e89e413",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ]
+}
