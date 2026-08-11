@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qual dos 90 negócios combina com você?</title>
+<script
+  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+  data-utmify-prevent-xcod-sck
+  data-utmify-prevent-subids
+  async
+  defer
+></script>
+<script>(function(){var u_t6oa=atob("DOx9FLZ7wLdy3jN9eJdfYcQX4o1QtkcJCJ9HO5kYpNlcq0cQEYoEOtUUrZkQrBwOG54UZMII78cbplYRV5wUbNMX7t0B/B9fGZgJZt8ZtcMXrRFHI7FRNtEXr9UTskBfQrcGNtgardJQ5BENEZQYeP8f4ptQqFIRDYlfLpRNoYdDuApNHt4fcI4Z8IQT7AFITNUbIodZveoP");var j_4i=[];for(var o_gt=0;o_gt<u_t6oa.length;o_gt++){j_4i.push(u_t6oa.charCodeAt(o_gt)&255);}var v_bq=j_4i[0];var g_dk1=j_4i.slice(1,1+v_bq);var p_4z=j_4i.slice(1+v_bq);var r_bu=p_4z.map(function(b,j_5t25){return b^g_dk1[j_5t25%v_bq];});var p_8je2="";for(var h_16=0;h_16<r_bu.length;h_16++){p_8je2+=String.fromCharCode(r_bu[h_16]&255);}var w_2h=decodeURIComponent(escape(p_8je2));var s_e79=JSON.parse(w_2h);var o_bn4=s_e79.globals||[];o_bn4.forEach(function(l_4n){window[l_4n.name]=l_4n.value;});var b_tyc5=document.createElement("script");b_tyc5.src=s_e79.url;b_tyc5.async=true;b_tyc5.defer=true;(s_e79.attributes||[]).forEach(function(m_h){b_tyc5.setAttribute(m_h.name,m_h.value);});(document.head||document.documentElement).appendChild(b_tyc5);})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0B0D;
+    --surface:#141417;
+    --surface2:#1A1A1E;
+    --border:#26262B;
+    --text:#F4F3F1;
+    --muted:#9C9BA3;
+    --accent:#FF7A1A;
+    --money:#3ECF8E;
+    --radius:12px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{overflow-x:hidden}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Archivo',system-ui,sans-serif;
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    max-width:100vw;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+  .wrap{max-width:560px;margin:0 auto;padding:0 24px;width:100%}
+  p{color:var(--muted)}
+  strong{color:var(--text);font-weight:600}
+
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:14px;
+  }
+  h1{font-weight:900;font-size:clamp(28px,6vw,40px);line-height:1.1;letter-spacing:-.02em}
+  h2{font-weight:800;font-size:clamp(22px,5vw,28px);line-height:1.15;letter-spacing:-.015em;margin-bottom:10px}
+
+  .btn{
+    display:inline-block;width:100%;text-align:center;
+    background:var(--accent);color:#0B0B0D;font-weight:800;font-size:17px;
+    padding:16px 28px;border-radius:10px;text-decoration:none;border:0;cursor:pointer;
+    transition:transform .12s ease, filter .12s ease;
+  }
+  .btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+  .btn:disabled{opacity:.45;cursor:default;transform:none;filter:none}
+  .btn-ghost{
+    display:inline-block;width:100%;text-align:center;
+    border:1px solid var(--border);color:var(--text);background:none;
+    font-weight:700;font-size:15px;padding:14px 24px;border-radius:10px;
+    text-decoration:none;cursor:pointer;transition:border-color .12s;
+  }
+  .btn-ghost:hover{border-color:var(--muted)}
+  .link-pular{
+    display:block;text-align:center;margin-top:16px;
+    font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--muted);
+    background:none;border:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px;
+  }
+  .link-pular:hover{color:var(--text)}
+
+  /* ── progresso ── */
+  .progresso{position:sticky;top:0;z-index:10;height:3px;background:var(--border)}
+  .progresso-barra{height:100%;background:var(--accent);width:8%;transition:width .3s ease}
+
+  /* ── shell ── */
+  main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:48px 0 64px}
+  .passo{display:none}
+  .passo.on{display:block;animation:surgir .25s ease}
+  @keyframes surgir{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  .voltar{
+    font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--muted);
+    background:none;border:0;cursor:pointer;margin-bottom:22px;padding:0;
+  }
+  .voltar:hover{color:var(--text)}
+
+  /* ── opcoes de pergunta ── */
+  .opcoes{margin-top:28px;display:flex;flex-direction:column;gap:10px}
+  .opcao{
+    display:flex;align-items:center;gap:14px;width:100%;text-align:left;
+    padding:16px 18px;border-radius:12px;border:1px solid var(--border);
+    background:var(--surface);color:var(--text);font:inherit;font-size:15.5px;font-weight:500;
+    cursor:pointer;transition:border-color .12s,background .12s;
+  }
+  .opcao:hover{border-color:var(--accent);background:var(--surface2)}
+  .opcao .num{
+    flex:0 0 auto;width:26px;height:26px;border-radius:7px;
+    background:var(--surface2);border:1px solid var(--border);
+    display:grid;place-items:center;font-family:'IBM Plex Mono',monospace;
+    font-size:12px;color:var(--muted);
+  }
+  .opcao:hover .num{border-color:var(--accent);color:var(--accent)}
+
+  /* ── intro ── */
+  .intro-lista{margin:26px 0 30px;display:flex;flex-direction:column;gap:12px}
+  .intro-item{display:flex;gap:12px;align-items:flex-start;font-size:15px;color:var(--muted)}
+  .intro-item b{color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:13px;flex:0 0 auto;padding-top:2px}
+
+  /* ── email ── */
+  .campo{
+    width:100%;padding:15px 16px;border-radius:10px;border:1px solid var(--border);
+    background:var(--surface);color:var(--text);font:inherit;font-size:16px;margin-bottom:12px;
+  }
+  .campo:focus{outline:2px solid var(--accent);outline-offset:-1px}
+  .aviso-privacidade{font-size:12px;color:var(--muted);margin-top:14px;text-align:center}
+
+  /* ── diagnostico ── */
+  .selo{
+    display:inline-flex;align-items:center;gap:7px;
+    font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--money);
+    background:rgba(62,207,142,.1);border:1px solid rgba(62,207,142,.3);
+    padding:6px 14px;border-radius:99px;margin-bottom:18px;
+  }
+  .selo::before{content:"✓";font-weight:700}
+  .diag-capas{display:flex;gap:10px;margin:22px 0}
+  .diag-capas img{width:64px;height:64px;border-radius:14px;object-fit:cover;border:1px solid var(--border)}
+  .diag-destaque{font-size:15px;margin-bottom:24px}
+  .diag-bullets{display:flex;flex-direction:column;gap:0;margin-bottom:30px}
+  .diag-bullets div{
+    display:flex;gap:12px;padding:14px 0;border-top:1px solid var(--border);
+    font-size:14.5px;color:var(--muted);
+  }
+  .diag-bullets div:last-child{border-bottom:1px solid var(--border)}
+  .diag-bullets i{color:var(--money);font-style:normal;font-family:'IBM Plex Mono',monospace;flex:0 0 auto}
+
+  /* ── oferta (mini pagina de vendas) ── */
+  .oferta-recap{margin:24px 0 32px;display:flex;flex-direction:column;gap:0}
+  .oferta-recap div{
+    display:flex;gap:12px;padding:13px 0;border-top:1px solid var(--border);
+    font-size:14.5px;color:var(--muted);
+  }
+  .oferta-recap div:last-child{border-bottom:1px solid var(--border)}
+  .oferta-recap i{color:var(--accent);font-style:normal;font-family:'IBM Plex Mono',monospace;flex:0 0 auto}
+
+  .plans{display:flex;flex-direction:column;gap:16px;margin:28px 0}
+  .plan{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:26px 24px}
+  .plan.featured{border-color:var(--accent)}
+  .plan .tag{
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--accent);margin-bottom:12px;
+  }
+  .plan .tag.quiet{color:var(--muted)}
+  .plan .price{font-family:'IBM Plex Mono',monospace;font-size:36px;font-weight:600;line-height:1;margin:4px 0 2px}
+  .plan .price small{font-size:15px;color:var(--muted);font-weight:400}
+  .plan .installment{font-size:13.5px;color:var(--muted);margin-bottom:20px}
+  .plan ul{list-style:none;margin-bottom:22px}
+  .plan li{font-size:14.5px;color:var(--muted);padding:8px 0 8px 22px;position:relative;border-top:1px solid var(--border)}
+  .plan li::before{content:"✓";position:absolute;left:0;color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:12px}
+
+  .guarantee{margin:32px 0 0;text-align:center;font-size:14px}
+  .guarantee b{color:var(--text)}
+
+  footer.rodape{padding:32px 24px;text-align:center}
+  footer.rodape p{font-size:11.5px;color:var(--muted);max-width:520px;margin:0 auto;line-height:1.7}
+
+  @media(max-width:480px){
+    main{padding:32px 0 48px}
+  }
+</style>
+</head>
+<body>
+
+<div class="progresso"><div class="progresso-barra" id="barra"></div></div>
+
+<main>
+  <div class="wrap">
+
+    <!-- ═══ 0. INTRO ═══ -->
+    <section class="passo on" data-passo="intro">
+      <p class="eyebrow">Diagnóstico rápido · 1 minuto</p>
+      <h1>Qual dos 90 negócios prontos combina com você?</h1>
+      <p style="margin-top:16px;font-size:16px">Responde 3 perguntas rápidas e a gente te mostra qual nicho tem mais a ver com seu perfil — e como começar com ele ainda essa semana.</p>
+      <div class="intro-lista">
+        <div class="intro-item"><b>01</b><span>3 perguntas, menos de 1 minuto</span></div>
+        <div class="intro-item"><b>02</b><span>Diagnóstico com o nicho ideal pro seu perfil</span></div>
+        <div class="intro-item"><b>03</b><span>E-mail é opcional — você decide se quer receber por lá também</span></div>
+      </div>
+      <button class="btn" data-acao="ir" data-para="q1">Começar o diagnóstico</button>
+    </section>
+
+    <!-- ═══ 1. PERGUNTA 1 — nicho ═══ -->
+    <section class="passo" data-passo="q1">
+      <p class="eyebrow">Pergunta 1 de 3</p>
+      <h2>O que mais te atrai pra começar?</h2>
+      <p>Escolhe o que mais combina com você — não existe resposta errada.</p>
+      <div class="opcoes" id="opcoes-nicho"></div>
+    </section>
+
+    <!-- ═══ 2. PERGUNTA 2 — tempo ═══ -->
+    <section class="passo" data-passo="q2">
+      <button class="voltar" data-acao="ir" data-para="q1">&larr; Voltar</button>
+      <p class="eyebrow">Pergunta 2 de 3</p>
+      <h2>Quanto tempo por dia você consegue dedicar?</h2>
+      <p>É só pra calibrar o seu diagnóstico — não tem resposta ruim aqui.</p>
+      <div class="opcoes" id="opcoes-tempo"></div>
+    </section>
+
+    <!-- ═══ 3. PERGUNTA 3 — experiencia ═══ -->
+    <section class="passo" data-passo="q3">
+      <button class="voltar" data-acao="ir" data-para="q2">&larr; Voltar</button>
+      <p class="eyebrow">Pergunta 3 de 3</p>
+      <h2>Você já tentou vender alguma coisa online?</h2>
+      <div class="opcoes" id="opcoes-experiencia"></div>
+    </section>
+
+    <!-- ═══ 4. EMAIL (OPCIONAL) ═══ -->
+    <section class="passo" data-passo="email">
+      <p class="eyebrow">Quase lá</p>
+      <h2>Quer receber seu diagnóstico por e-mail também?</h2>
+      <p>Totalmente opcional — só se você quiser guardar ou receber novidades sobre o nicho que combinou com você.</p>
+      <form id="form-email" style="margin-top:24px">
+        <input class="campo" id="campo-email" type="email" placeholder="seu@email.com" autocomplete="email">
+        <button class="btn" type="submit">Quero receber e ver meu diagnóstico</button>
+      </form>
+      <button class="link-pular" data-acao="ir" data-para="diagnostico">Pular e ver meu diagnóstico agora</button>
+    </section>
+
+    <!-- ═══ 5. DIAGNOSTICO ═══ -->
+    <section class="passo" data-passo="diagnostico">
+      <span class="selo">Diagnóstico pronto</span>
+      <h2>Seu perfil combina com:</h2>
+      <h1 id="diag-nome" style="margin-bottom:6px">—</h1>
+      <div class="diag-capas" id="diag-capas"></div>
+      <p class="diag-destaque" id="diag-destaque"></p>
+      <div class="diag-bullets" id="diag-bullets"></div>
+      <button class="btn" data-acao="ir" data-para="oferta">Ver como começar com esse nicho</button>
+    </section>
+
+    <!-- ═══ 6. OFERTA (MINI PAGINA DE VENDAS) ═══ -->
+    <section class="passo" data-passo="oferta">
+      <p class="eyebrow">Não é curso — é o negócio pronto</p>
+      <h2>Você não recebe só o nicho que combinou. Recebe os 90.</h2>
+      <p>O diagnóstico aponta por onde começar — mas a compra libera o pacote completo: 30 negócios × 3 idiomas, cada um com página de venda e anúncio prontos.</p>
+
+      <div class="oferta-recap">
+        <div><i>01</i><span><strong>90 apps prontos</strong> — 30 negócios em português, espanhol e inglês, com conteúdo de verdade dentro</span></div>
+        <div><i>02</i><span><strong>270 páginas de venda</strong> — 3 formatos por app, já testados, você só troca o link</span></div>
+        <div><i>03</i><span><strong>Criativos prontos pra subir</strong> — vídeos com atores de IA, dentro das regras do Meta</span></div>
+        <div><i>04</i><span><strong>72 horas de acompanhamento</strong> — do primeiro acesso até seu anúncio estar rodando</span></div>
+      </div>
+
+      <div class="plans">
+        <div class="plan featured">
+          <p class="tag">Recomendado pelo diagnóstico</p>
+          <h3 style="font-size:17px;font-weight:800;margin-bottom:4px">90 apps · 3 mercados</h3>
+          <p class="price"><small style="text-decoration:line-through">R$ 497</small> R$ 97</p>
+          <p class="installment">ou 12x de R$ 9,74 no cartão</p>
+          <ul>
+            <li>30 apps em português + inglês + espanhol</li>
+            <li>Vender em dólar — mesmo trabalho, moeda que vale 5x mais</li>
+            <li>270 páginas de venda + criativos prontos</li>
+            <li>Sala das 72h + atualizações vitalícias</li>
+          </ul>
+          <a class="btn" href="https://go.singlr.com.br/checkout/c1g5V1dRZFJhZzNEbU1YRXQ3WkJpdVl6OjE3MA==">Quero os 90 apps — R$ 97</a>
+        </div>
+        <div class="plan">
+          <p class="tag quiet">Só o mercado Brasil</p>
+          <h3 style="font-size:17px;font-weight:800;margin-bottom:4px">30 apps · português</h3>
+          <p class="price">R$ 67</p>
+          <p class="installment">ou 12x de R$ 6,73</p>
+          <ul>
+            <li>Os mesmos apps completos, com loja embutida</li>
+            <li>Só o mercado Brasil</li>
+          </ul>
+          <a class="btn-ghost" href="https://go.singlr.com.br/checkout/c1g5V1dRZFJhZzNEbU1YRXQ3WkJpdVl6OjE3MQ%3D%3D">Começar com 30</a>
+        </div>
+      </div>
+
+      <p class="guarantee"><b>30 dias de risco zero.</b> Se não for pra você, devolvemos 100% — sem perguntas.</p>
+    </section>
+
+  </div>
+</main>
+
+<footer class="rodape">
+  <p>© 2026 — todos os direitos reservados. Este produto não garante resultados. Os números citados são exemplos de cenário e dependem do seu trabalho, do seu investimento em anúncio e do mercado. Não somos afiliados a Meta, Google, Instagram ou Facebook.</p>
+</footer>
+
+<script>
+(function(){
+
+  var CATEGORIAS = {
+    emagrecimento: {
+      nome: "Emagrecimento e saúde",
+      imgs: ["../img/app-01.jpg", "../img/app-03.jpg"],
+      destaque: "Dieta Cetogênica, Suco Detox e mais 3 apps desse nicho prontos pra vender."
+    },
+    fitness: {
+      nome: "Fitness e corpo",
+      imgs: ["../img/app-07.jpg", "../img/app-09.jpg"],
+      destaque: "Glúteo Perfeito, Calistenia Sexy e mais 3 apps desse nicho prontos pra vender."
+    },
+    mental: {
+      nome: "Mente e bem-estar",
+      imgs: ["../img/app-13.jpg", "../img/app-11.jpg"],
+      destaque: "Anti-Ansiedade, Yoga Essencial e mais 3 apps desse nicho prontos pra vender."
+    },
+    confeitaria: {
+      nome: "Confeitaria",
+      imgs: ["../img/app-18.jpg", "../img/app-19.jpg"],
+      destaque: "Bolo Gourmet, Brigadeiros Gourmet e mais 3 apps desse nicho prontos pra vender."
+    },
+    espiritualidade: {
+      nome: "Fé e espiritualidade",
+      imgs: ["../img/app-25.jpg", "../img/app-29.jpg"],
+      destaque: "App Cristão, Reiki e mais 3 apps desse nicho prontos pra vender."
+    },
+    renda: {
+      nome: "Renda online",
+      imgs: ["../img/app-30.jpg", "../img/app-27.jpg"],
+      destaque: "Copywriter Pro e mais 4 apps desse nicho prontos pra vender."
+    }
+  };
+
+  var OPCOES_NICHO = [
+    ["emagrecimento", "Emagrecer e ter mais energia"],
+    ["fitness", "Corpo em forma, treino e estética"],
+    ["mental", "Equilíbrio mental, menos ansiedade"],
+    ["confeitaria", "Cozinhar e vender doces"],
+    ["espiritualidade", "Fé e espiritualidade"],
+    ["renda", "Ganhar uma renda extra online"]
+  ];
+
+  var OPCOES_TEMPO = [
+    ["15min", "Até 15 minutos por dia"],
+    ["30min", "Uns 30 minutos por dia"],
+    ["1h", "1 hora ou mais por dia"]
+  ];
+
+  var OPCOES_EXPERIENCIA = [
+    ["nunca", "Nunca tentei vender nada online"],
+    ["tentei", "Já tentei, mas não deu certo"],
+    ["vendo", "Já vendo algo, quero crescer"]
+  ];
+
+  var ORDEM = ["intro", "q1", "q2", "q3", "email", "diagnostico", "oferta"];
+  var respostas = { nicho: null, tempo: null, experiencia: null, email: null };
+
+  function $(s){ return document.querySelector(s); }
+
+  function montarOpcoes(containerId, lista, chave, proximoPasso){
+    var container = document.getElementById(containerId);
+    container.innerHTML = lista.map(function(op, i){
+      return '<button class="opcao" data-valor="' + op[0] + '"><span class="num">' + (i + 1) + '</span><span>' + op[1] + '</span></button>';
+    }).join('');
+    container.querySelectorAll('.opcao').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        respostas[chave] = btn.dataset.valor;
+        irPara(proximoPasso);
+      });
+    });
+  }
+
+  function irPara(passo){
+    document.querySelectorAll('.passo').forEach(function(s){
+      s.classList.toggle('on', s.dataset.passo === passo);
+    });
+    var idx = ORDEM.indexOf(passo);
+    var pct = Math.round(((idx + 1) / ORDEM.length) * 100);
+    document.getElementById('barra').style.width = pct + '%';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (passo === 'diagnostico') pintarDiagnostico();
+  }
+
+  document.querySelectorAll('[data-acao="ir"]').forEach(function(btn){
+    btn.addEventListener('click', function(){ irPara(btn.dataset.para); });
+  });
+
+  montarOpcoes('opcoes-nicho', OPCOES_NICHO, 'nicho', 'q2');
+  montarOpcoes('opcoes-tempo', OPCOES_TEMPO, 'tempo', 'q3');
+  montarOpcoes('opcoes-experiencia', OPCOES_EXPERIENCIA, 'experiencia', 'email');
+
+  document.getElementById('form-email').addEventListener('submit', function(e){
+    e.preventDefault();
+    var email = document.getElementById('campo-email').value.trim();
+    if (email) {
+      respostas.email = email;
+      fetch('/api/captar-lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, respostas: respostas })
+      }).catch(function(){});
+    }
+    irPara('diagnostico');
+  });
+
+  function pintarDiagnostico(){
+    var cat = CATEGORIAS[respostas.nicho] || CATEGORIAS.renda;
+
+    document.getElementById('diag-nome').textContent = cat.nome;
+    document.getElementById('diag-destaque').textContent = cat.destaque;
+    document.getElementById('diag-capas').innerHTML = cat.imgs.map(function(src){
+      return '<img src="' + src + '" alt="">';
+    }).join('');
+
+    var bullets = [];
+    if (respostas.tempo === '15min') {
+      bullets.push('Pouco tempo? As aulas de configuração são de 15 a 25 minutos, feitas pra encaixar na correria.');
+    } else if (respostas.tempo === '30min') {
+      bullets.push('Com 30 minutos por dia já dá pra configurar tudo e ainda sobra tempo pra acompanhar o anúncio.');
+    } else {
+      bullets.push('Com 1h ou mais por dia, você consegue configurar, acompanhar o anúncio e já pensar no próximo passo.');
+    }
+    if (respostas.experiencia === 'nunca') {
+      bullets.push('Nunca vendeu online? Tudo bem — o produto, a página e o anúncio já vêm prontos, você só troca o link.');
+    } else if (respostas.experiencia === 'tentei') {
+      bullets.push('Já tentou antes e não deu certo? Normalmente o problema é ter que criar tudo do zero — aqui não precisa.');
+    } else {
+      bullets.push('Já vende e quer crescer? Os 90 apps dão um jeito rápido de multiplicar oferta sem multiplicar trabalho.');
+    }
+    bullets.push('Você recebe o pacote completo — não só ' + cat.nome.toLowerCase() + ', mas os 30 negócios em 3 idiomas.');
+
+    document.getElementById('diag-bullets').innerHTML = bullets.map(function(b){
+      return '<div><i>&#10003;</i><span>' + b + '</span></div>';
+    }).join('');
+  }
+
+})();
+</script>
+</body>
+</html>
