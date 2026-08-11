@@ -171,6 +171,20 @@
   .guarantee{margin:32px 0 0;text-align:center;font-size:14px}
   .guarantee b{color:var(--text)}
 
+  .faq{margin-top:40px}
+  .faq h3{font-size:19px;font-weight:800;margin-bottom:8px}
+  .faq details{border-top:1px solid var(--border)}
+  .faq details:last-child{border-bottom:1px solid var(--border)}
+  .faq summary{
+    cursor:pointer;list-style:none;
+    padding:16px 0;font-weight:500;font-size:15px;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+  }
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:17px;flex-shrink:0}
+  .faq details[open] summary::after{content:"–"}
+  .faq details p{padding:0 0 16px;font-size:14px}
+
   footer.rodape{padding:32px 24px;text-align:center}
   footer.rodape p{font-size:11.5px;color:var(--muted);max-width:520px;margin:0 auto;line-height:1.7}
 
@@ -288,6 +302,30 @@
       </div>
 
       <p class="guarantee"><b>30 dias de risco zero.</b> Se não for pra você, devolvemos 100% — sem perguntas.</p>
+
+      <div class="faq">
+        <h3>"Sim, mas e se...?"</h3>
+        <details>
+          <summary>Isso é golpe ou pirâmide?</summary>
+          <p>Não. Você compra os apps uma vez e fica com 100% de cada venda — não é afiliação, ninguém encosta no seu lucro. O sistema já roda em 5 países.</p>
+        </details>
+        <details>
+          <summary>Funciona pra mim que sou leigo?</summary>
+          <p>É a pessoa pra quem isso foi feito. As aulas de configuração têm 15–25 minutos no total e são copiar e colar. Nos 3 primeiros dias você é acompanhado na Sala das 72h.</p>
+        </details>
+        <details>
+          <summary>Vou ter que aparecer ou gravar vídeo?</summary>
+          <p>Nunca. Os criativos já vêm prontos com atores de IA. Você baixa, sobe e anuncia — zero edição, zero gravação.</p>
+        </details>
+        <details>
+          <summary>E se eu gastar meu pouco dinheiro e não vender?</summary>
+          <p>O teste custa R$ 10/dia de anúncio, e você tem 30 dias de garantia total sobre a compra. O único risco real é continuar exatamente onde você está.</p>
+        </details>
+        <details>
+          <summary>Tem mensalidade ou custo escondido?</summary>
+          <p>Não. Pagamento único, acesso vitalício, atualizações incluídas. O único gasto recorrente do negócio é o que você escolhe investir em anúncio.</p>
+        </details>
+      </div>
     </section>
 
   </div>
