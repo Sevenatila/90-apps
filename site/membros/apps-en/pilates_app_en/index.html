@@ -8425,7 +8425,14 @@ height: calc(100dvh - 36px) !important;            padding-top: 0 !important;
         }
 
         function goToHotmart() {
-            window.open('https://hotmart.com/seu-link-aqui', '_blank');
+            // Usa premiumModal.checkoutUrl do config; se nao houver, cai no primeiro
+            // produto premium com link valido. Nunca o placeholder hardcoded.
+            var u = _afpCheckout((typeof APP_CONFIG !== 'undefined' && APP_CONFIG.premiumModal) || {});
+            if (!u && Array.isArray(premiumProducts)) {
+                for (var i = 0; i < premiumProducts.length && !u; i++) u = _afpCheckout(premiumProducts[i]);
+            }
+            if (!u) { closePremiumModal(); return; }
+            window.open(u, '_blank', 'noopener');
         }
 
         // Close modals on backdrop click
