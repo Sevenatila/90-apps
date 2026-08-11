@@ -113,9 +113,16 @@
   .opcao:hover .num{border-color:var(--accent);color:var(--accent)}
 
   /* ── intro ── */
-  .intro-lista{margin:26px 0 30px;display:flex;flex-direction:column;gap:12px}
-  .intro-item{display:flex;gap:12px;align-items:flex-start;font-size:15px;color:var(--muted)}
-  .intro-item b{color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:13px;flex:0 0 auto;padding-top:2px}
+  .lead{font-size:18px;margin-top:16px}
+  .btn-note{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;color:var(--muted);margin-top:12px;text-align:center;
+  }
+  .footnote{
+    margin-top:32px;padding-top:20px;
+    border-top:1px dashed var(--border);
+    font-size:13.5px;
+  }
 
   /* ── email ── */
   .campo{
@@ -204,13 +211,10 @@
     <section class="passo on" data-passo="intro">
       <p class="eyebrow">Chega de gastar pra validar oferta</p>
       <h1>Cansado de gastar dinheiro validando oferta ou criando app do zero?</h1>
-      <p style="margin-top:16px;font-size:16px">30 negócios prontos, em 3 idiomas, pra copiar, colar e lucrar — sem testar do zero e sem queimar dinheiro descobrindo o que funciona. 3 perguntas rápidas e a gente te mostra por qual desses 30 começar.</p>
-      <div class="intro-lista">
-        <div class="intro-item"><b>01</b><span>Nada de gastar validando oferta — os 30 já são prontos e testados</span></div>
-        <div class="intro-item"><b>02</b><span>Copia, cola, troca o link — sem criar app do zero</span></div>
-        <div class="intro-item"><b>03</b><span>3 idiomas prontos: o mesmo trabalho vende em real e em dólar</span></div>
-      </div>
+      <p class="lead">Responde 3 perguntas rápidas e a gente te mostra por qual dos 30 negócios prontos começar — já validados, é só copiar, colar e publicar.</p>
       <button class="btn" data-acao="ir" data-para="q1">Descobrir por onde eu começo</button>
+      <p class="btn-note">3 perguntas · menos de 1 minuto · sem compromisso</p>
+      <p class="footnote">Os mesmos 30 apps já vêm prontos em português, espanhol e inglês — o mesmo trabalho de configurar também vende em dólar.</p>
     </section>
 
     <!-- ═══ 1. PERGUNTA 1 — nicho ═══ -->
