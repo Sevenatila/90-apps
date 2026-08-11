@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Painel · 90 apps</title>
+<meta name="robots" content="noindex, nofollow, noarchive" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#0B0B0D; --surface:#141417; --surface2:#1A1A1E; --surface3:#222227;
+    --border:#26262B; --text:#F4F3F1; --muted:#9C9BA3;
+    --accent:#FF7A1A; --money:#3ECF8E; --warn:#F5B942; --danger:#F4614A;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Archivo',system-ui,sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .mono{font-family:'IBM Plex Mono',monospace}
+  ::-webkit-scrollbar{width:9px;height:9px}
+  ::-webkit-scrollbar-track{background:var(--surface)}
+  ::-webkit-scrollbar-thumb{background:#33333a;border-radius:5px}
+  ::-webkit-scrollbar-thumb:hover{background:#45454e}
+  input[type=date]{color-scheme:dark}
+  a{color:inherit}
+
+  /* ── login ── */
+  .login-wrap{min-height:100vh;display:grid;place-items:center;padding:24px}
+  .login-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:32px;width:100%;max-width:360px}
+  .login-card h1{font-size:22px;font-weight:900;letter-spacing:-.02em;text-align:center}
+  .login-card p.sub{font-size:12px;color:var(--muted);text-align:center;margin:4px 0 22px}
+  .campo{width:100%;padding:13px 15px;border-radius:9px;border:1px solid var(--border);background:var(--bg);color:var(--text);font:inherit;font-size:15px;margin-bottom:10px}
+  .campo:focus{outline:2px solid var(--accent);outline-offset:-1px}
+  .btn-cheio{width:100%;background:var(--accent);color:#0B0B0D;font-weight:800;font-size:15px;padding:13px;border:0;border-radius:9px;cursor:pointer}
+  .btn-cheio:disabled{opacity:.5;cursor:default}
+  .erro-login{color:var(--danger);font-size:12.5px;text-align:center;min-height:18px;margin-bottom:10px}
+
+  /* ── shell ── */
+  .app{display:none;height:100vh;overflow:hidden}
+  .app.on{display:flex}
+  nav.lateral{width:64px;flex:0 0 auto;border-right:1px solid var(--border);background:var(--surface);display:flex;flex-direction:column;height:100vh}
+  @media(min-width:1024px){nav.lateral{width:220px}}
+  .marca{height:58px;display:flex;align-items:center;gap:9px;padding:0 16px;border-bottom:1px solid var(--border);flex:0 0 auto}
+  .marca b{color:var(--accent);font-weight:900;letter-spacing:-.02em;display:none;white-space:nowrap}
+  .marca .ponto{width:11px;height:11px;border-radius:3px;background:var(--accent);flex:0 0 auto}
+  @media(min-width:1024px){.marca b{display:block}}
+  .nav-itens{flex:1;overflow-y:auto;padding:12px 10px;display:flex;flex-direction:column;gap:4px}
+  .nav-item{display:flex;align-items:center;gap:11px;padding:11px 12px;border-radius:9px;border:0;background:none;color:var(--muted);font:inherit;font-size:14px;cursor:pointer;text-align:left;width:100%}
+  .nav-item:hover{background:var(--surface2);color:var(--text)}
+  .nav-item.on{background:rgba(255,122,26,.12);color:var(--accent)}
+  .nav-item .ic{width:20px;text-align:center;flex:0 0 auto;font-size:15px}
+  .nav-item span.txt{display:none}
+  @media(min-width:1024px){.nav-item span.txt{display:block}}
+  .nav-rodape{padding:12px 10px;border-top:1px solid var(--border)}
+
+  main.conteudo{flex:1;display:flex;flex-direction:column;height:100vh;overflow:hidden;min-width:0}
+  header.topo{border-bottom:1px solid var(--border);padding:12px 18px;flex:0 0 auto;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:flex-start}
+  header.topo h1{font-size:19px;font-weight:800;letter-spacing:-.015em}
+  header.topo p{font-size:12.5px;color:var(--muted)}
+  .area{flex:1;overflow-y:auto;padding:18px}
+
+  /* ── filtros ── */
+  .filtros{display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:flex-end}
+  .chip{padding:7px 12px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--muted);font:inherit;font-size:12.5px;cursor:pointer;white-space:nowrap}
+  .chip:hover{color:var(--text);border-color:#3a3a42}
+  .chip.on{background:var(--accent);border-color:var(--accent);color:#0B0B0D;font-weight:700}
+  .sel{padding:7px 10px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font:inherit;font-size:12.5px;cursor:pointer}
+  .sel:focus{outline:1px solid var(--accent)}
+  .grupo{display:flex;gap:4px;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:3px}
+  .grupo .chip{border:0;padding:5px 10px}
+  .rot{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-right:2px}
+  .data{padding:6px 8px;border-radius:7px;border:1px solid var(--border);background:var(--surface);color:var(--text);font:inherit;font-size:12px}
+
+  /* ── blocos ── */
+  .grade{display:grid;gap:12px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:1100px){.g4{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:760px){.g2,.g4{grid-template-columns:1fr}}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:15px}
+  .card .rotulo{font-size:12px;color:var(--muted);margin-bottom:3px}
+  .card .valor{font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+  .card .sub{font-size:11.5px;color:var(--muted);margin-top:3px}
+  .painel{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px}
+  .painel h3{font-size:15px;font-weight:800;margin-bottom:12px}
+  .nota{font-size:11.5px;color:var(--muted);margin-top:11px;line-height:1.6}
+  .vazio{text-align:center;padding:34px 10px;color:var(--muted);font-size:13.5px}
+  .erro{background:rgba(244,97,74,.1);border:1px solid rgba(244,97,74,.3);color:var(--danger);border-radius:11px;padding:14px;font-size:13.5px}
+  .carregando{display:grid;place-items:center;padding:60px;color:var(--muted);font-size:13px}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{text-align:left;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;font-weight:500;padding:0 8px 8px 0;border-bottom:1px solid var(--border);white-space:nowrap}
+  td{padding:9px 8px 9px 0;border-bottom:1px solid rgba(38,38,43,.6)}
+  td.num,th.num{text-align:right}
+  .trunc{max-width:230px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+  .barra{height:7px;background:var(--surface3);border-radius:99px;overflow:hidden}
+  .barra i{display:block;height:100%;background:var(--accent);border-radius:99px}
+  .linha-barra{margin-bottom:9px}
+  .linha-barra .cab{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px;gap:10px}
+  .tag{font-size:11px;padding:2px 7px;border-radius:99px;border:1px solid var(--border);color:var(--muted);white-space:nowrap}
+  .tag.site{color:var(--accent);border-color:rgba(255,122,26,.35)}
+  .tag.quiz{color:var(--money);border-color:rgba(62,207,142,.35)}
+  .btn-link{background:none;border:0;color:var(--accent);font:inherit;font-size:12.5px;cursor:pointer;text-decoration:underline;text-underline-offset:2px;padding:0}
+
+  /* ── mapa de calor ── */
+  #hmShell{overflow:auto;border-radius:10px;background:#08080a;border:1px solid var(--border)}
+  #hmStage{position:relative;transform-origin:top left}
+  #hmFrame{border:0;display:block;background:#fff}
+  #hmCanvas{position:absolute;inset:0;pointer-events:none}
+  .rampa{display:inline-block;width:70px;height:7px;border-radius:99px;background:linear-gradient(90deg,#3b82f6,#22d3ee,#a3e635,#fbbf24,#ef4444)}
+  .calor-grade{display:grid;grid-template-columns:minmax(0,auto) minmax(280px,1fr);gap:12px;align-items:start}
+  @media(max-width:1200px){.calor-grade{grid-template-columns:1fr}}
+
+  /* ── gaveta ── */
+  .gaveta-fundo{position:fixed;inset:0;background:rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:opacity .2s;z-index:40}
+  .gaveta-fundo.on{opacity:1;pointer-events:auto}
+  .gaveta{position:fixed;top:0;right:0;bottom:0;width:100%;max-width:440px;background:var(--surface2);border-left:1px solid var(--border);transform:translateX(100%);transition:transform .25s;z-index:50;overflow-y:auto}
+  .gaveta.on{transform:none}
+</style>
+</head>
+<body>
+
+<!-- ══ LOGIN ══════════════════════════════════════════════════════════════ -->
+<div class="login-wrap" id="login">
+  <form class="login-card" id="formLogin">
+    <h1>Painel · 90 apps</h1>
+    <p class="sub">Site de vendas + quiz · monitoramento</p>
+    <input class="campo" id="u" type="text" placeholder="Usuário" autocomplete="username" />
+    <input class="campo" id="p" type="password" placeholder="Senha" autocomplete="current-password" />
+    <p class="erro-login" id="erroLogin"></p>
+    <button class="btn-cheio" id="btnEntrar" type="submit">Entrar</button>
+  </form>
+</div>
+
+<!-- ══ APP ════════════════════════════════════════════════════════════════ -->
+<div class="app" id="app">
+  <nav class="lateral">
+    <div class="marca"><span class="ponto"></span><b>Painel · 90 apps</b></div>
+    <div class="nav-itens" id="navItens"></div>
+    <div class="nav-rodape">
+      <button class="nav-item" id="btnSair"><span class="ic">⏻</span><span class="txt">Sair</span></button>
+    </div>
+  </nav>
+
+  <main class="conteudo">
+    <header class="topo">
+      <div>
+        <h1 id="tTitulo">Visão geral</h1>
+        <p id="tSub"></p>
+      </div>
+      <div class="filtros" id="barraFiltros"></div>
+    </header>
+    <div class="area" id="area"></div>
+  </main>
+</div>
+
+<div class="gaveta-fundo" id="gavetaFundo"></div>
+<aside class="gaveta" id="gaveta"></aside>
+
+<script>
+(function(){
+  'use strict';
+
+  // ── Telas ────────────────────────────────────────────────────────────────
+  var TELAS = [
+    {id:'visao',   ic:'▤', label:'Visão geral',  sub:'O resumo do período'},
+    {id:'funil',   ic:'▽', label:'Funil',        sub:'Onde a visita morre'},
+    {id:'calor',   ic:'◉', label:'Mapa de calor',sub:'Onde o dedo encosta'},
+    {id:'quiz',    ic:'✎', label:'Quiz',         sub:'O que respondem e o que vira'},
+    {id:'sessoes', ic:'☰', label:'Sessões',      sub:'Jornada de cada visita'},
+    {id:'eventos', ic:'⌨', label:'Eventos',      sub:'Log cru do rastreio'}
+  ];
+
+  var PERIODOS = [
+    {k:'hoje', l:'Hoje',    d:0},
+    {k:'7d',   l:'7 dias',  d:6},
+    {k:'15d',  l:'15 dias', d:14},
+    {k:'30d',  l:'30 dias', d:29}
+  ];
+
+  // Rotulo legivel de cada secao. Bate com os data-sec do HTML das paginas.
+  var SECOES = {
+    site: {
+      'hero':'Hero', 'como-funciona':'Como funciona', 'o-que-vem':'O que vem dentro',
+      'vitrine':'Vitrine de apps', 'pra-quem':'Pra quem é', 'preco':'Preço',
+      'faq':'FAQ', 'final':'CTA final', 'rodape':'Rodapé'
+    },
+    quiz: {
+      'intro':'Intro', 'q1':'Pergunta 1', 'q2':'Pergunta 2', 'q3':'Pergunta 3',
+      'email':'Tela de e-mail', 'diagnostico':'Diagnóstico', 'oferta':'Oferta (última tela)'
+    }
+  };
+  var PAGINAS = { site:'Site de vendas', quiz:'Quiz' };
+
+  // ── Estado ───────────────────────────────────────────────────────────────
+  var token = null, tela = 'visao';
+  var periodo = '7d', de = '', ate = '';
+  var fPage = '', fDevice = '', fUtm = '';
+  var origens = [];
+  var hmPage = 'site', hmSecao = '', hmDados = null;
+  var sessFiltro = 'all', sessOffset = 0;
+
+  var $ = function(id){ return document.getElementById(id); };
+  var esc = function(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
+  var n = function(v){ return Number(v||0).toLocaleString('pt-BR'); };
+  var pct = function(a,b){ return b ? ((a/b)*100).toFixed(1)+'%' : '0%'; };
+  var dur = function(s){ s=Number(s||0); return s<60 ? s+'s' : Math.floor(s/60)+'m'+(s%60?(s%60)+'s':''); };
+  var dt = function(d){ return d ? new Date(d).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '—'; };
+  var secLabel = function(pg, s){ return (SECOES[pg]&&SECOES[pg][s]) || (SECOES.site[s]||SECOES.quiz[s]) || s || '—'; };
+  var reais = function(v){ return 'R$ ' + Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); };
+
+  // ── Sessão do painel ─────────────────────────────────────────────────────
+  function salvarToken(t){ token=t; try{ sessionStorage.setItem('ap_painel_tk',t); }catch(_){} }
+  function lerToken(){ try{ return sessionStorage.getItem('ap_painel_tk'); }catch(_){ return null; } }
+  function sair(){
+    token=null;
+    try{ sessionStorage.removeItem('ap_painel_tk'); }catch(_){}
+    $('app').classList.remove('on'); $('login').style.display='grid';
+  }
+
+  function api(view, extra){
+    var qs = new URLSearchParams(extra||{});
+    qs.set('view', view);
+    if(de) qs.set('from', de);
+    if(ate) qs.set('to', ate);
+    // O que a tela pediu manda: o mapa de calor precisa fixar uma página
+    // mesmo quando o filtro do topo está em "site + quiz".
+    if(fPage && !qs.get('page')) qs.set('page', fPage);
+    if(fDevice) qs.set('device', fDevice);
+    if(fUtm) qs.set('utm', fUtm);
+    return fetch('/api/admin?'+qs.toString(), { headers:{ Authorization:'Bearer '+token } })
+      .then(function(r){
+        if(r.status===401){ sair(); throw new Error('Sessão expirada — entre de novo.'); }
+        return r.json().then(function(d){
+          if(!r.ok) throw new Error(d.error || ('Erro '+r.status));
+          return d;
+        });
+      });
+  }
+
+  // ── Período e filtros ────────────────────────────────────────────────────
+  function aplicarPeriodo(k){
+    periodo = k;
+    var p = PERIODOS.filter(function(x){ return x.k===k; })[0];
+    var hoje = new Date();
+    var ini = new Date(hoje); ini.setDate(hoje.getDate() - (p?p.d:6));
+    var iso = function(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
+    de = iso(ini); ate = iso(hoje);
+    pintarFiltros(); render();
+  }
+
+  function pintarFiltros(){
+    var html = '';
+    html += '<div class="grupo">' + PERIODOS.map(function(p){
+      return '<button class="chip'+(periodo===p.k?' on':'')+'" data-per="'+p.k+'">'+p.l+'</button>';
+    }).join('') + '</div>';
+
+    html += '<div class="grupo"><span class="rot" style="padding-left:6px">de</span>'
+         +  '<input class="data" type="date" id="dtDe" value="'+esc(de)+'">'
+         +  '<span class="rot">até</span>'
+         +  '<input class="data" type="date" id="dtAte" value="'+esc(ate)+'"></div>';
+
+    html += '<div class="grupo">'
+         +  '<button class="chip'+(fPage===''?' on':'')+'" data-pg="">Site + quiz</button>'
+         +  '<button class="chip'+(fPage==='site'?' on':'')+'" data-pg="site">Site</button>'
+         +  '<button class="chip'+(fPage==='quiz'?' on':'')+'" data-pg="quiz">Quiz</button>'
+         +  '</div>';
+
+    html += '<select class="sel" id="selDev">'
+         +  ['','mobile','tablet','desktop'].map(function(d){
+              return '<option value="'+d+'"'+(fDevice===d?' selected':'')+'>'+(d?d[0].toUpperCase()+d.slice(1):'Todos aparelhos')+'</option>';
+            }).join('') + '</select>';
+
+    html += '<select class="sel" id="selUtm"><option value="">Toda origem</option>'
+         +  origens.map(function(o){
+              return '<option value="'+esc(o)+'"'+(fUtm===o?' selected':'')+'>'+esc(o)+'</option>';
+            }).join('') + '</select>';
+
+    html += '<button class="chip" id="btnRecarregar" title="Recarregar">↻</button>';
+
+    $('barraFiltros').innerHTML = html;
+
+    Array.prototype.forEach.call($('barraFiltros').querySelectorAll('[data-per]'), function(b){
+      b.onclick = function(){ aplicarPeriodo(b.dataset.per); };
+    });
+    Array.prototype.forEach.call($('barraFiltros').querySelectorAll('[data-pg]'), function(b){
+      b.onclick = function(){
+        fPage = b.dataset.pg;
+        if(fPage) hmPage = fPage;
+        pintarFiltros(); render();
+      };
+    });
+    $('selDev').onchange = function(){ fDevice = this.value; render(); pintarFiltros(); };
+    $('selUtm').onchange = function(){ fUtm = this.value; render(); pintarFiltros(); };
+    $('dtDe').onchange  = function(){ de = this.value;  periodo=''; pintarFiltros(); render(); };
+    $('dtAte').onchange = function(){ ate = this.value; periodo=''; pintarFiltros(); render(); };
+    $('btnRecarregar').onclick = function(){ render(); };
+  }
+
+  function pintarNav(){
+    $('navItens').innerHTML = TELAS.map(function(t){
+      return '<button class="nav-item'+(tela===t.id?' on':'')+'" data-tela="'+t.id+'">'
+           + '<span class="ic">'+t.ic+'</span><span class="txt">'+t.label+'</span></button>';
+    }).join('');
+    Array.prototype.forEach.call($('navItens').querySelectorAll('[data-tela]'), function(b){
+      b.onclick = function(){ tela = b.dataset.tela; sessOffset = 0; pintarNav(); render(); };
+    });
+    var atual = TELAS.filter(function(t){ return t.id===tela; })[0];
+    $('tTitulo').textContent = atual.label;
+    $('tSub').textContent = atual.sub;
+  }
+
+  // ── Blocos ───────────────────────────────────────────────────────────────
+  function card(rotulo, valor, sub, cor){
+    return '<div class="card"><p class="rotulo">'+esc(rotulo)+'</p>'
+         + '<p class="valor"'+(cor?' style="color:'+cor+'"':'')+'>'+valor+'</p>'
+         + (sub?'<p class="sub">'+sub+'</p>':'') + '</div>';
+  }
+  function painel(titulo, corpo){
+    return '<div class="painel"><h3>'+esc(titulo)+'</h3>'+corpo+'</div>';
+  }
+  function vazio(msg){ return '<div class="vazio">'+esc(msg)+'</div>'; }
+  function barra(p, cor){
+    return '<div class="barra"><i style="width:'+Math.min(100,Math.max(0,p))+'%'
+         + (cor?';background:'+cor:'')+'"></i></div>';
+  }
+
+  // ══ VISÃO GERAL ═════════════════════════════════════════════════════════
+  function telaVisao(){
+    return api('stats').then(function(d){
+      origens = d.origens || [];
+      var r = d.resumo, rc = d.receita;
+      var maxDia = Math.max.apply(null, [1].concat(d.porDia.map(function(x){ return Number(x.sessoes); })));
+
+      var html = '<div class="grade g4" style="margin-bottom:12px">'
+        + card('Sessões', n(r.sessoes), 'visitas únicas no período')
+        + card('Clicaram num CTA', n(r.com_cta), pct(r.com_cta, r.sessoes)+' das sessões', 'var(--accent)')
+        + card('Foram ao checkout', n(r.checkouts), pct(r.checkouts, r.sessoes)+' das sessões', 'var(--warn)')
+        + card('Vendas confirmadas', n(rc.vendas), reais(rc.bruto)+' · '+n(rc.reembolsos)+' reemb.', 'var(--money)')
+        + '</div>';
+
+      html += '<div class="grade g4" style="margin-bottom:12px">'
+        + card('Tempo médio', dur(r.tempo_medio), 'mediana '+dur(r.tempo_mediano))
+        + card('Rolagem média', r.scroll_medio+'%', 'da altura da página')
+        + card('Rejeição', pct(r.rejeicoes, r.sessoes), 'menos de 25% e 10s',
+               (r.rejeicoes/(r.sessoes||1)>0.6 ? 'var(--danger)' : ''))
+        + card('Leads do quiz', n(r.leads), n(r.viram_oferta)+' chegaram na oferta', 'var(--money)')
+        + '</div>';
+
+      html += '<div class="grade g2">';
+
+      html += painel('Movimento por dia', d.porDia.length ? d.porDia.map(function(x){
+          return '<div class="linha-barra"><div class="cab">'
+               + '<span style="color:var(--muted)">'+x.dia.slice(8)+'/'+x.dia.slice(5,7)+'</span>'
+               + '<span>'+n(x.sessoes)+' sessões · <span style="color:var(--accent)">'+n(x.ctas)+' CTA</span>'
+               + ' · <span style="color:var(--warn)">'+n(x.checkouts)+' checkout</span></span></div>'
+               + barra(Number(x.sessoes)/maxDia*100) + '</div>';
+        }).join('') : vazio('Sem movimento no período'));
+
+      html += painel('Site x Quiz', d.porPagina.length ? '<table><thead><tr>'
+          + '<th>Página</th><th class="num">Sessões</th><th class="num">CTA</th>'
+          + '<th class="num">Checkout</th><th class="num">Leads</th><th class="num">Tempo</th></tr></thead><tbody>'
+          + d.porPagina.map(function(x){
+              return '<tr><td><span class="tag '+esc(x.page)+'">'+esc(PAGINAS[x.page]||x.page)+'</span></td>'
+                   + '<td class="num">'+n(x.sessoes)+'</td>'
+                   + '<td class="num" style="color:var(--accent)">'+n(x.ctas)+'</td>'
+                   + '<td class="num" style="color:var(--warn)">'+n(x.checkouts)+'</td>'
+                   + '<td class="num">'+n(x.leads)+'</td>'
+                   + '<td class="num" style="color:var(--muted)">'+dur(x.tempo_medio)+'</td></tr>';
+            }).join('')
+          + '</tbody></table><p class="nota">A comparação que decide onde vale gastar tráfego. '
+          + 'Vendas não entram nesta tabela: o checkout é fora do domínio e não dá pra amarrar a venda à sessão.</p>'
+        : vazio('Sem sessões no período'));
+
+      html += painel('Aparelho', d.porDispositivo.length ? '<table><thead><tr>'
+          + '<th>Aparelho</th><th class="num">Sessões</th><th class="num">Rolagem</th>'
+          + '<th class="num">Tempo</th><th class="num">Checkout</th></tr></thead><tbody>'
+          + d.porDispositivo.map(function(x){
+              return '<tr><td style="text-transform:capitalize">'+esc(x.device)+'</td>'
+                   + '<td class="num">'+n(x.sessoes)+'</td>'
+                   + '<td class="num" style="color:var(--muted)">'+x.scroll_medio+'%</td>'
+                   + '<td class="num" style="color:var(--muted)">'+dur(x.tempo_medio)+'</td>'
+                   + '<td class="num" style="color:var(--warn)">'+n(x.checkouts)+'</td></tr>';
+            }).join('') + '</tbody></table>' : vazio('Sem dados de aparelho'));
+
+      html += painel('Origem do tráfego', d.porOrigem.length ? '<table><thead><tr>'
+          + '<th>Origem</th><th>Campanha</th><th class="num">Sessões</th><th class="num">Checkout</th></tr></thead><tbody>'
+          + d.porOrigem.map(function(x){
+              return '<tr><td>'+esc(x.origem)+'</td>'
+                   + '<td style="color:var(--muted)"><span class="trunc">'+esc(x.campanha)+'</span></td>'
+                   + '<td class="num">'+n(x.sessoes)+'</td>'
+                   + '<td class="num" style="color:var(--warn)">'+n(x.checkouts)+'</td></tr>';
+            }).join('') + '</tbody></table>'
+          : vazio('Sem UTM registrada — o tráfego está chegando direto'));
+
+      html += '</div>';
+      return html;
+    });
+  }
+
+  // ══ FUNIL ═══════════════════════════════════════════════════════════════
+  function telaFunil(){
+    return api('funnel').then(function(d){
+      var html = '<div class="grade' + (d.funis.length>1 ? ' g2' : '') + '" style="margin-bottom:12px">';
+
+      if(!d.funis.length) html += painel('Funil', vazio('Nenhum evento no período. Confira a aba Eventos.'));
+
+      html += d.funis.map(function(f){
+        var pior = null, piorPerda = 0;
+        f.passos.forEach(function(p,i){ if(i>0 && p.perdeu>piorPerda){ piorPerda=p.perdeu; pior=i; } });
+        return painel(PAGINAS[f.page]+' · da chegada ao checkout',
+          f.passos[0].sessoes ? f.passos.map(function(p,i){
+            var destaque = (i===pior) ? 'background:rgba(244,97,74,.08);border:1px solid rgba(244,97,74,.25);border-radius:8px;padding:7px 9px;margin:0 -9px 9px' : '';
+            return '<div class="linha-barra" style="'+destaque+'"><div class="cab"><span>'+esc(p.label)
+                 + (i===pior?' <b style="color:var(--danger);font-size:11px">← maior queda</b>':'')+'</span>'
+                 + '<span><b>'+n(p.sessoes)+'</b> <span style="color:var(--muted)">('+p.pct_do_topo+'%)</span></span></div>'
+                 + barra(p.pct_do_topo, i===f.passos.length-1 ? 'var(--money)' : 'var(--accent)')
+                 + (i>0 ? '<p class="nota" style="margin-top:4px">'+p.pct_do_anterior+'% de quem passou pela etapa anterior · perdeu '+n(p.perdeu)+'</p>' : '')
+                 + '</div>';
+          }).join('') : vazio('Nenhum evento desta página no período'));
+      }).join('');
+      html += '</div>';
+
+      html += '<div class="grade g2">';
+
+      html += painel('Quantos chegam em cada seção/tela', d.secoes.length ? (function(){
+        var max = Math.max.apply(null, [1].concat(d.secoes.map(function(s){ return Number(s.sessoes); })));
+        return d.secoes.map(function(s){
+          return '<div class="linha-barra"><div class="cab">'
+               + '<span><span class="tag '+esc(s.page)+'">'+esc(s.page)+'</span> '+esc(secLabel(s.page, s.section))+'</span>'
+               + '<span style="color:var(--muted)">'+n(s.sessoes)+'</span></div>'
+               + barra(Number(s.sessoes)/max*100) + '</div>';
+        }).join('');
+      })() : vazio('Sem leitura de seção ainda'));
+
+      html += painel('Onde a visita parou', d.abandono.length ? '<table><thead><tr>'
+        + '<th>Página</th><th>Última seção vista</th><th class="num">Sessões</th></tr></thead><tbody>'
+        + d.abandono.map(function(x){
+            return '<tr><td><span class="tag '+esc(x.page)+'">'+esc(x.page)+'</span></td>'
+                 + '<td>'+esc(secLabel(x.page, x.section))+'</td>'
+                 + '<td class="num" style="color:var(--warn)">'+n(x.sessoes)+'</td></tr>';
+          }).join('') + '</tbody></table>'
+        + '<p class="nota">Só sessões que <b>não</b> chegaram ao checkout.</p>'
+        : vazio('Sem abandono registrado'));
+
+      html += '</div>';
+
+      html += '<div style="margin-top:12px">' + painel('Qual botão trabalha de verdade', d.ctas.length ?
+        '<table><thead><tr><th>Página</th><th>Seção</th><th>Botão</th>'
+        + '<th class="num">Cliques</th><th class="num">Sessões</th></tr></thead><tbody>'
+        + d.ctas.map(function(x){
+            return '<tr><td><span class="tag '+esc(x.page)+'">'+esc(x.page)+'</span></td>'
+                 + '<td style="color:var(--muted)">'+esc(secLabel(x.page, x.section))+'</td>'
+                 + '<td><span class="trunc">'+esc(x.label)+'</span></td>'
+                 + '<td class="num" style="color:var(--accent)"><b>'+n(x.cliques)+'</b></td>'
+                 + '<td class="num" style="color:var(--muted)">'+n(x.sessoes)+'</td></tr>';
+          }).join('') + '</tbody></table>'
+        + '<p class="nota">O site repete o botão em quase toda seção. Os de pouco movimento são candidatos a sair — ou a mudar de texto.</p>'
+        : vazio('Nenhum clique em botão ainda')) + '</div>';
+
+      return html;
+    });
+  }
+
+  // ══ MAPA DE CALOR ═══════════════════════════════════════════════════════
+  function telaCalor(){
+    // O quiz precisa SEMPRE de uma tela escolhida: as coordenadas foram
+    // medidas com aquela tela na frente. Sem isso o mapa misturaria telas.
+    if(hmPage === 'quiz' && !hmSecao) hmSecao = 'oferta';
+    if(hmPage === 'site' && hmSecao && !SECOES.site[hmSecao]) hmSecao = '';
+
+    return api('heatmap', { page: hmPage, section: hmSecao, cols: 60, rows: 220 }).then(function(d){
+      hmDados = d;
+      var larguras = { mobile:390, tablet:820, desktop:1280 };
+      var larg = larguras[fDevice] || 390;
+      var mortos = d.mortos.reduce(function(a,x){ return a + Number(x.cliques); }, 0);
+
+      var url = hmPage === 'quiz'
+        ? '/quiz/?notrack=1&passo=' + encodeURIComponent(hmSecao || 'oferta')
+        : '/?notrack=1';
+
+      setTimeout(montarMapa, 60);
+
+      var html = '<div class="filtros" style="justify-content:flex-start;margin-bottom:12px">'
+        + '<span class="rot">Página</span>'
+        + '<div class="grupo">'
+        +   '<button class="chip'+(hmPage==='site'?' on':'')+'" data-hp="site">Site de vendas</button>'
+        +   '<button class="chip'+(hmPage==='quiz'?' on':'')+'" data-hp="quiz">Quiz</button>'
+        + '</div>'
+        + '<span class="rot">Seção</span>'
+        + '<select class="sel" id="selSec">'
+        +   (hmPage==='site' ? '<option value="">Página inteira</option>' : '')
+        +   Object.keys(SECOES[hmPage]).map(function(k){
+              return '<option value="'+k+'"'+(hmSecao===k?' selected':'')+'>'+SECOES[hmPage][k]+'</option>';
+            }).join('')
+        + '</select>'
+        + '<span style="margin-left:auto;font-size:12.5px;color:var(--muted)">'
+        +   n(d.grade.total)+' cliques · pico '+n(d.grade.pico)+' numa célula · '
+        +   'renderizado em '+larg+'px'+(fDevice?'':' (mobile — troque o aparelho no topo)')
+        + '</span></div>';
+
+      html += '<div class="calor-grade">';
+
+      html += '<div class="painel" style="padding:12px">'
+        + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;gap:12px">'
+        +   '<h3 style="margin:0">A página, com o calor por cima</h3>'
+        +   '<span style="font-size:11.5px;color:var(--muted)">frio <span class="rampa"></span> quente</span>'
+        + '</div>'
+        + '<div id="hmShell"><div id="hmStage">'
+        +   '<iframe id="hmFrame" src="'+url+'" width="'+larg+'" height="900" scrolling="no" title="página"></iframe>'
+        +   '<canvas id="hmCanvas"></canvas>'
+        + '</div></div>'
+        + '<p class="nota">Cada mancha é onde os dedos encostaram, na proporção da tela — '
+        + 'por isso funciona igual em celular e desktop. Use o filtro de aparelho no topo para trocar a largura.</p>'
+        + '</div>';
+
+      html += '<div class="grade" style="gap:12px">';
+
+      html += painel('Até onde a página é lida', d.rolagem.length ? d.rolagem.map(function(r){
+          var v = Number(r.pct);
+          return '<div style="display:flex;align-items:center;gap:9px;margin-bottom:6px">'
+               + '<span style="width:36px;text-align:right;font-size:12px;color:var(--muted)">'+r.ate+'%</span>'
+               + '<div style="flex:1">'+barra(v, v<25?'var(--danger)':v<50?'var(--warn)':'var(--money)')+'</div>'
+               + '<span style="width:48px;text-align:right;font-size:12px">'+r.pct+'%</span></div>';
+        }).join('') + '<p class="nota">'
+        + (hmPage==='quiz'
+            ? 'No quiz a rolagem só é medida dentro da tela de oferta — as outras telas cabem na tela. A base aqui são as sessões que chegaram na oferta.'
+            : 'Onde a barra despenca é onde a página perde o leitor. Se cair antes da seção de preço, o problema está no que vem antes dela.')
+        + '</p>' : vazio('Sem dados de rolagem'));
+
+      html += painel('Cliques mortos'+(mortos?' · '+n(mortos):''), d.mortos.length ?
+        '<table><thead><tr><th>Seção</th><th>O que clicaram</th><th class="num">Vezes</th></tr></thead><tbody>'
+        + d.mortos.map(function(x){
+            return '<tr><td style="color:var(--muted)">'+esc(secLabel(hmPage, x.section))+'</td>'
+                 + '<td><span class="trunc">'+esc(x.label)+'</span></td>'
+                 + '<td class="num" style="color:var(--warn)"><b>'+n(x.cliques)+'</b></td></tr>';
+          }).join('') + '</tbody></table>'
+        + '<p class="nota">Gente clicando em coisa que não é clicável. Cada linha é uma imagem ou texto que <i>parece</i> botão — vale virar link pra oferta.</p>'
+        : vazio('Nenhum clique morto — a página está sendo lida como foi desenhada'));
+
+      html += painel('Mais clicados', d.elementos.length ?
+        '<table><thead><tr><th>Elemento</th><th>Seção</th><th class="num">Cliques</th></tr></thead><tbody>'
+        + d.elementos.slice(0,15).map(function(x){
+            return '<tr><td>'+(x.is_cta?'<span style="color:var(--money)">● </span>':'')
+                 + '<span class="trunc">'+esc(x.label)+'</span></td>'
+                 + '<td style="color:var(--muted)">'+esc(secLabel(hmPage, x.section))+'</td>'
+                 + '<td class="num"><b>'+n(x.cliques)+'</b></td></tr>';
+          }).join('') + '</tbody></table>' : vazio('Sem cliques no período'));
+
+      html += '</div></div>';
+      return html;
+    });
+  }
+
+  // Desenha o mapa: primeiro em tons de cinza (alpha acumulado), depois troca
+  // cada pixel pela cor da rampa. É como toda biblioteca de heatmap funciona —
+  // só que sem carregar biblioteca nenhuma.
+  function montarMapa(){
+    var frame = $('hmFrame'), canvas = $('hmCanvas'), stage = $('hmStage'), shell = $('hmShell');
+    if(!frame || !canvas || !hmDados) return;
+
+    function pintar(){
+      var alturaDoc = 900;
+      try {
+        var doc = frame.contentDocument;
+        if(doc) alturaDoc = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight);
+      } catch(_) {}
+
+      var largura = frame.width ? Number(frame.width) : frame.offsetWidth;
+      frame.height = alturaDoc;
+      frame.style.height = alturaDoc+'px';
+      stage.style.width = largura+'px';
+      stage.style.height = alturaDoc+'px';
+      canvas.width = largura; canvas.height = alturaDoc;
+
+      var ctx = canvas.getContext('2d');
+      ctx.clearRect(0,0,largura,alturaDoc);
+
+      var g = hmDados.grade;
+      if(!g.celulas.length) return;
+      var raio = Math.max(18, Math.round(largura/16));
+
+      // 1. intensidade em alpha
+      g.celulas.forEach(function(c){
+        var x = (Number(c.gx)+0.5)/g.cols*largura;
+        var y = (Number(c.gy)+0.5)/g.rows*alturaDoc;
+        var forca = Math.min(1, Number(c.n)/(g.pico||1));
+        var grad = ctx.createRadialGradient(x,y,0,x,y,raio);
+        grad.addColorStop(0,'rgba(0,0,0,'+(0.12+forca*0.55)+')');
+        grad.addColorStop(1,'rgba(0,0,0,0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath(); ctx.arc(x,y,raio,0,Math.PI*2); ctx.fill();
+      });
+
+      // 2. alpha → rampa de cor (azul → ciano → verde → âmbar → vermelho)
+      var img = ctx.getImageData(0,0,largura,alturaDoc);
+      var px = img.data;
+      for(var i=0;i<px.length;i+=4){
+        var a = px[i+3];
+        if(!a) continue;
+        var t = a/255, r, gg, b;
+        if(t<0.25){      r=59;  gg=130; b=246; }
+        else if(t<0.45){ r=34;  gg=211; b=238; }
+        else if(t<0.65){ r=163; gg=230; b=53;  }
+        else if(t<0.82){ r=251; gg=191; b=36;  }
+        else {           r=239; gg=68;  b=68;  }
+        px[i]=r; px[i+1]=gg; px[i+2]=b;
+        px[i+3]=Math.min(235, a+40);
+      }
+      ctx.putImageData(img,0,0);
+
+      // 3. encaixa na largura disponível
+      var disp = shell.clientWidth - 8;
+      var escala = Math.min(1, disp/largura);
+      stage.style.transform = 'scale('+escala+')';
+      shell.style.height = Math.min(alturaDoc*escala + 8, window.innerHeight - 250) + 'px';
+    }
+
+    if(frame.contentDocument && frame.contentDocument.readyState === 'complete') pintar();
+    frame.onload = function(){ setTimeout(pintar, 400); };  // fontes/imagens mudam a altura
+  }
+
+  // ══ QUIZ ════════════════════════════════════════════════════════════════
+  function telaQuiz(){
+    return api('quiz').then(function(d){
+      var r = d.resumo;
+
+      function distrib(titulo, lista, nota){
+        if(!lista.length) return painel(titulo, vazio('Ninguém respondeu isso ainda'));
+        var max = Math.max.apply(null, [1].concat(lista.map(function(x){ return Number(x.sessoes); })));
+        return painel(titulo, lista.map(function(x){
+          return '<div class="linha-barra"><div class="cab"><span>'+esc(x.label)+'</span>'
+               + '<span><b>'+n(x.sessoes)+'</b> <span style="color:var(--muted)">· '
+               + n(x.viram_oferta)+' na oferta · '+n(x.checkouts)+' checkout</span></span></div>'
+               + barra(Number(x.sessoes)/max*100) + '</div>';
+        }).join('') + (nota ? '<p class="nota">'+nota+'</p>' : ''));
+      }
+
+      var html = '<div class="grade g4" style="margin-bottom:12px">'
+        + card('Abriram o quiz', n(r.sessoes))
+        + card('Responderam tudo', n(r.responderam_tudo), pct(r.responderam_tudo, r.sessoes)+' de quem abriu')
+        + card('Chegaram na oferta', n(r.viram_oferta), pct(r.viram_oferta, r.sessoes)+' de quem abriu', 'var(--accent)')
+        + card('Deixaram e-mail', n(r.leads), pct(r.leads, r.sessoes)+' de quem abriu', 'var(--money)')
+        + '</div>';
+
+      html += '<div class="grade g2">'
+        + distrib('Nicho escolhido', d.nicho,
+            'A coluna da direita é o que cada nicho vira depois. Nicho muito escolhido e que não chega na oferta é problema de diagnóstico, não de tráfego.')
+        + distrib('Tempo disponível', d.tempo)
+        + distrib('Experiência', d.experiencia)
+        + painel('Leads captados · '+n(d.totalLeads), d.leads.length ?
+            '<table><thead><tr><th>Quando</th><th>E-mail</th><th>Nicho</th></tr></thead><tbody>'
+            + d.leads.map(function(l){
+                var resp = l.respostas || {};
+                return '<tr><td style="color:var(--muted)">'+dt(l.criado_em)+'</td>'
+                     + '<td><span class="trunc">'+esc(l.email)+'</span></td>'
+                     + '<td style="color:var(--muted)">'+esc(resp.nicho || '—')+'</td></tr>';
+              }).join('') + '</tbody></table>'
+            + '<p class="nota">Vem da tabela <span class="mono">leads_quiz</span>, gravada por /api/captar-lead.</p>'
+            : vazio('Nenhum e-mail deixado no período'))
+        + '</div>';
+
+      return html;
+    });
+  }
+
+  // ══ SESSÕES ═════════════════════════════════════════════════════════════
+  function telaSessoes(){
+    var FILTROS = [
+      {k:'all',      l:'Todas'},
+      {k:'checkout', l:'Foram ao checkout'},
+      {k:'oferta',   l:'Viram a oferta e não foram'},
+      {k:'cta',      l:'Clicaram e pararam'},
+      {k:'lead',     l:'Deixaram e-mail'},
+      {k:'engajou',  l:'Leram metade e não clicaram'},
+      {k:'rejeitou', l:'Bateram o olho e saíram'},
+      {k:'raiva',    l:'Clique de raiva'}
+    ];
+    return api('sessions', { filtro: sessFiltro, offset: sessOffset, limit: 60 }).then(function(d){
+      setTimeout(function(){
+        Array.prototype.forEach.call(document.querySelectorAll('[data-f]'), function(b){
+          b.onclick = function(){ sessFiltro = b.dataset.f; sessOffset = 0; render(); };
+        });
+        Array.prototype.forEach.call(document.querySelectorAll('[data-sess]'), function(b){
+          b.onclick = function(){ abrirJornada(b.dataset.sess); };
+        });
+        var ant = $('pgAnt'), prox = $('pgProx');
+        if(ant)  ant.onclick  = function(){ sessOffset = Math.max(0, sessOffset-60); render(); };
+        if(prox) prox.onclick = function(){ sessOffset += 60; render(); };
+      }, 0);
+
+      var html = '<div class="filtros" style="justify-content:flex-start;margin-bottom:12px">'
+        + FILTROS.map(function(f){
+            return '<button class="chip'+(sessFiltro===f.k?' on':'')+'" data-f="'+f.k+'">'+f.l+'</button>';
+          }).join('') + '</div>';
+
+      html += painel(n(d.total)+' sessões', d.sessoes.length ?
+        '<div style="overflow-x:auto"><table><thead><tr>'
+        + '<th>Quando</th><th>Página</th><th>Aparelho</th><th>Origem</th>'
+        + '<th class="num">Rolou</th><th class="num">Tempo</th><th>Parou em</th><th>Estado</th><th></th>'
+        + '</tr></thead><tbody>'
+        + d.sessoes.map(function(s){
+            var estado = s.reached_checkout ? '<b style="color:var(--warn)">checkout</b>'
+              : s.viu_oferta ? '<span style="color:var(--accent)">viu a oferta</span>'
+              : s.cta_clicks>0 ? '<span style="color:var(--accent)">clicou</span>'
+              : '<span style="color:var(--muted)">visitou</span>';
+            return '<tr><td style="color:var(--muted);white-space:nowrap">'+dt(s.first_ts)+'</td>'
+              + '<td><span class="tag '+esc(s.page)+'">'+esc(s.page)+'</span></td>'
+              + '<td style="text-transform:capitalize">'+esc(s.device||'—')+'</td>'
+              + '<td style="color:var(--muted)"><span class="trunc" style="max-width:120px">'+esc(s.utm_source||'direto')+'</span></td>'
+              + '<td class="num">'+s.max_scroll+'%</td>'
+              + '<td class="num" style="color:var(--muted)">'+dur(s.duration_sec)+'</td>'
+              + '<td><span class="trunc" style="max-width:140px">'+esc(secLabel(s.page, s.last_section))+'</span></td>'
+              + '<td>'+estado+(s.deu_email?' <span class="tag" style="color:var(--money)">lead</span>':'')+'</td>'
+              + '<td><button class="btn-link" data-sess="'+esc(s.session_id)+'">ver jornada</button></td></tr>';
+          }).join('')
+        + '</tbody></table></div>'
+        + '<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">'
+        +   (sessOffset>0 ? '<button class="chip" id="pgAnt">← anteriores</button>' : '')
+        +   (d.hasMore ? '<button class="chip" id="pgProx">próximas →</button>' : '')
+        + '</div>'
+        : vazio('Nenhuma sessão com esse filtro'));
+
+      return html;
+    });
+  }
+
+  function abrirJornada(id){
+    var g = $('gaveta'), f = $('gavetaFundo');
+    g.innerHTML = '<div class="carregando">carregando…</div>';
+    g.classList.add('on'); f.classList.add('on');
+    f.onclick = fecharGaveta;
+
+    api('sessions', { id: id }).then(function(d){
+      if(d.erro) throw new Error(d.erro);
+      var s = d.sessao;
+      g.innerHTML = '<div style="padding:18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;gap:12px">'
+        + '<div><h3 style="font-size:16px;font-weight:800">Jornada da visita</h3>'
+        +   '<p class="mono" style="font-size:11px;color:var(--muted)">'+esc(s.session_id)+'</p></div>'
+        + '<button class="btn-link" id="fecharGav">fechar</button></div>'
+        + '<div style="padding:18px">'
+        + '<div class="grade g2" style="gap:10px;margin-bottom:14px">'
+        +   '<div><p class="rotulo" style="font-size:11px;color:var(--muted)">Página</p>'+esc(PAGINAS[s.page]||s.page)+'</div>'
+        +   '<div><p class="rotulo" style="font-size:11px;color:var(--muted)">Aparelho</p>'+esc(s.device||'—')+' · '+(s.vw||'?')+'px</div>'
+        +   '<div><p class="rotulo" style="font-size:11px;color:var(--muted)">Rolou até</p>'+s.max_scroll+'%</div>'
+        +   '<div><p class="rotulo" style="font-size:11px;color:var(--muted)">Tempo ativo</p>'+dur(s.duration_sec)+'</div>'
+        +   '<div><p class="rotulo" style="font-size:11px;color:var(--muted)">Origem</p>'+esc(s.utm_source||'direto')+'</div>'
+        +   '<div><p class="rotulo" style="font-size:11px;color:var(--muted)">País</p>'+esc(s.country||'—')+'</div>'
+        + '</div>'
+        + (s.quiz_nicho ? '<div class="painel" style="margin-bottom:14px;padding:12px">'
+            + '<p style="font-size:12.5px;color:var(--muted)">Respostas do quiz</p>'
+            + '<p style="font-size:13.5px">'+esc(s.quiz_nicho)+' · '+esc(s.quiz_tempo||'—')+' · '+esc(s.quiz_experiencia||'—')+'</p></div>' : '')
+        + '<h4 style="font-size:14px;font-weight:800;margin-bottom:9px">Linha do tempo</h4>'
+        + (d.eventos.length ? d.eventos.map(function(e){
+            var cor = (e.event_name==='cta_click'||e.event_name==='checkout_click') ? 'color:var(--accent);font-weight:700'
+                    : e.event_name==='rage_click' ? 'color:var(--danger);font-weight:700' : '';
+            return '<div style="display:flex;gap:11px;font-size:13px;margin-bottom:7px">'
+              + '<span class="mono" style="font-size:11px;color:var(--muted);flex:0 0 52px">'
+              +   new Date(e.ts).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit'})+'</span>'
+              + '<div style="flex:1;border-left:1px solid var(--border);padding-left:11px">'
+              +   '<span style="'+cor+'">'+esc(e.event_name)+'</span>'
+              +   (e.section?'<span style="color:var(--muted)"> · '+esc(secLabel(s.page, e.section))+'</span>':'')
+              +   (e.label?'<p style="font-size:11.5px;color:var(--muted)"><span class="trunc">'+esc(e.label)+'</span></p>':'')
+              + '</div></div>';
+          }).join('') : vazio('Sem eventos'))
+        + '</div>';
+      $('fecharGav').onclick = fecharGaveta;
+    }).catch(function(e){
+      g.innerHTML = '<div style="padding:18px"><div class="erro">'+esc(e.message)+'</div></div>';
+    });
+  }
+  function fecharGaveta(){
+    $('gaveta').classList.remove('on');
+    $('gavetaFundo').classList.remove('on');
+  }
+
+  // ══ EVENTOS ═════════════════════════════════════════════════════════════
+  function telaEventos(){
+    return api('events', { limit: 150 }).then(function(d){
+      var html = painel('Chegando por tipo', d.porTipo.length ?
+        '<div class="grade g4">' + d.porTipo.map(function(t){
+          return '<div class="card" style="background:var(--surface2)">'
+               + '<p class="rotulo"><span class="tag '+esc(t.page)+'">'+esc(t.page)+'</span> '+esc(t.event_name)+'</p>'
+               + '<p class="valor" style="font-size:19px">'+n(t.n)+'</p>'
+               + '<p class="sub">'+n(t.sessoes)+' sessões · '+dt(t.ultimo)+'</p></div>';
+        }).join('') + '</div>'
+        : vazio('Nenhum evento chegou ainda')
+          + '<div class="erro" style="color:var(--warn);background:rgba(245,185,66,.08);border-color:rgba(245,185,66,.3)">'
+          + '<b>Se está zerado:</b> confira se <span class="mono">/js/track.js</span> carrega nas páginas, '
+          + 'se <span class="mono">DATABASE_URL</span> está nas variáveis da Vercel e se você não está com '
+          + '<span class="mono">?notrack=1</span> ligado no seu navegador.</div>');
+
+      html += '<div style="margin-top:12px">' + painel('Log cru · '+n(d.total)+' eventos', d.eventos.length ?
+        '<div style="overflow-x:auto"><table><thead><tr>'
+        + '<th>Quando</th><th>Página</th><th>Evento</th><th>Seção</th><th>Rótulo</th><th>Aparelho</th><th>Sessão</th>'
+        + '</tr></thead><tbody>'
+        + d.eventos.map(function(e){
+            var cor = e.event_name==='rage_click' ? 'color:var(--danger)'
+                    : e.event_name.indexOf('click')>-1 ? 'color:var(--accent)' : '';
+            return '<tr><td style="color:var(--muted);white-space:nowrap">'+dt(e.ts)+'</td>'
+              + '<td><span class="tag '+esc(e.page)+'">'+esc(e.page)+'</span></td>'
+              + '<td style="'+cor+'">'+esc(e.event_name)+'</td>'
+              + '<td style="color:var(--muted)">'+esc(secLabel(e.page, e.section))+'</td>'
+              + '<td><span class="trunc">'+esc(e.label||'—')+'</span></td>'
+              + '<td style="color:var(--muted);text-transform:capitalize">'+esc(e.device||'—')+'</td>'
+              + '<td class="mono" style="font-size:11px;color:var(--muted)">'+esc(String(e.session_id).slice(0,12))+'…</td></tr>';
+          }).join('') + '</tbody></table></div>' : '') + '</div>';
+
+      return html;
+    });
+  }
+
+  // ── Roteador ─────────────────────────────────────────────────────────────
+  function render(){
+    $('area').innerHTML = '<div class="carregando">carregando…</div>';
+    var p = tela==='visao'   ? telaVisao()
+          : tela==='funil'   ? telaFunil()
+          : tela==='calor'   ? telaCalor()
+          : tela==='quiz'    ? telaQuiz()
+          : tela==='sessoes' ? telaSessoes()
+          : telaEventos();
+
+    p.then(function(html){
+      $('area').innerHTML = html;
+      if(tela==='calor'){
+        Array.prototype.forEach.call(document.querySelectorAll('[data-hp]'), function(b){
+          b.onclick = function(){
+            hmPage = b.dataset.hp;
+            hmSecao = hmPage==='quiz' ? 'oferta' : '';
+            render();
+          };
+        });
+        var sel = $('selSec');
+        if(sel) sel.onchange = function(){ hmSecao = sel.value; render(); };
+      }
+      // A lista de origens só chega junto com a visão geral; quando chegar,
+      // o seletor de origem precisa ser repintado.
+      if(tela==='visao') pintarFiltros();
+    }).catch(function(e){
+      $('area').innerHTML = '<div class="erro">'+esc(e.message)+'</div>';
+    });
+  }
+
+  // ── Login ────────────────────────────────────────────────────────────────
+  $('formLogin').onsubmit = function(ev){
+    ev.preventDefault();
+    var btn = $('btnEntrar');
+    btn.disabled = true; $('erroLogin').textContent = '';
+    fetch('/api/admin-login', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ username: $('u').value, password: $('p').value })
+    }).then(function(r){
+      return r.json().then(function(d){
+        if(!r.ok) throw new Error(d.error || 'Falha no login');
+        return d;
+      });
+    }).then(function(d){
+      salvarToken(d.token);
+      entrar();
+    }).catch(function(e){
+      $('erroLogin').textContent = e.message;
+    }).then(function(){ btn.disabled = false; });
+  };
+  $('btnSair').onclick = sair;
+
+  function entrar(){
+    $('login').style.display = 'none';
+    $('app').classList.add('on');
+    pintarNav();
+    aplicarPeriodo(periodo);
+  }
+
+  var tk = lerToken();
+  if(tk){ token = tk; entrar(); }
+})();
+</script>
+</body>
+</html>

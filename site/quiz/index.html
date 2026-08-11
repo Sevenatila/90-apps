@@ -208,17 +208,17 @@
   <div class="wrap">
 
     <!-- ═══ 0. INTRO ═══ -->
-    <section class="passo on" data-passo="intro">
+    <section class="passo on" data-passo="intro" data-sec="intro">
       <p class="eyebrow">Chega de gastar pra validar oferta</p>
       <h1>Cansado de gastar dinheiro validando oferta ou criando app do zero?</h1>
       <p class="lead">Responde 3 perguntas rápidas e a gente te mostra por qual dos 30 negócios prontos começar — já validados, é só copiar, colar e publicar.</p>
-      <button class="btn" data-acao="ir" data-para="q1">Descobrir por onde eu começo</button>
+      <button class="btn" data-acao="ir" data-para="q1" data-track="Começar o quiz">Descobrir por onde eu começo</button>
       <p class="btn-note">3 perguntas · menos de 1 minuto · sem compromisso</p>
       <p class="footnote">Os mesmos 30 apps já vêm prontos em português, espanhol e inglês — o mesmo trabalho de configurar também vende em dólar.</p>
     </section>
 
     <!-- ═══ 1. PERGUNTA 1 — nicho ═══ -->
-    <section class="passo" data-passo="q1">
+    <section class="passo" data-passo="q1" data-sec="q1">
       <p class="eyebrow">Pergunta 1 de 3</p>
       <h2>O que mais te atrai pra começar?</h2>
       <p>Escolhe o que mais combina com você — não existe resposta errada.</p>
@@ -226,7 +226,7 @@
     </section>
 
     <!-- ═══ 2. PERGUNTA 2 — tempo ═══ -->
-    <section class="passo" data-passo="q2">
+    <section class="passo" data-passo="q2" data-sec="q2">
       <button class="voltar" data-acao="ir" data-para="q1">&larr; Voltar</button>
       <p class="eyebrow">Pergunta 2 de 3</p>
       <h2>Quanto tempo por dia você consegue dedicar?</h2>
@@ -235,7 +235,7 @@
     </section>
 
     <!-- ═══ 3. PERGUNTA 3 — experiencia ═══ -->
-    <section class="passo" data-passo="q3">
+    <section class="passo" data-passo="q3" data-sec="q3">
       <button class="voltar" data-acao="ir" data-para="q2">&larr; Voltar</button>
       <p class="eyebrow">Pergunta 3 de 3</p>
       <h2>Qual dessas frases mais parece com você hoje?</h2>
@@ -243,7 +243,7 @@
     </section>
 
     <!-- ═══ 4. EMAIL (OPCIONAL) ═══ -->
-    <section class="passo" data-passo="email">
+    <section class="passo" data-passo="email" data-sec="email">
       <p class="eyebrow">Quase lá</p>
       <h2>Quer receber seu diagnóstico por e-mail também?</h2>
       <p>Totalmente opcional — só se você quiser guardar ou receber novidades sobre o nicho que combinou com você.</p>
@@ -251,22 +251,22 @@
         <input class="campo" id="campo-email" type="email" placeholder="seu@email.com" autocomplete="email">
         <button class="btn" type="submit">Quero receber e ver meu diagnóstico</button>
       </form>
-      <button class="link-pular" data-acao="ir" data-para="diagnostico">Pular e ver meu diagnóstico agora</button>
+      <button class="link-pular" data-acao="ir" data-para="diagnostico" data-ev="quiz_pular_email" data-track="Pular o e-mail">Pular e ver meu diagnóstico agora</button>
     </section>
 
     <!-- ═══ 5. DIAGNOSTICO ═══ -->
-    <section class="passo" data-passo="diagnostico">
+    <section class="passo" data-passo="diagnostico" data-sec="diagnostico">
       <span class="selo">Diagnóstico pronto</span>
       <h2>Seu perfil combina com:</h2>
       <h1 id="diag-nome" style="margin-bottom:6px">—</h1>
       <div class="diag-capas" id="diag-capas"></div>
       <p class="diag-destaque" id="diag-destaque"></p>
       <div class="diag-bullets" id="diag-bullets"></div>
-      <button class="btn" data-acao="ir" data-para="oferta">Ver como começar com esse nicho</button>
+      <button class="btn" data-acao="ir" data-para="oferta" data-track="Ver como começar">Ver como começar com esse nicho</button>
     </section>
 
     <!-- ═══ 6. OFERTA (MINI PAGINA DE VENDAS) ═══ -->
-    <section class="passo" data-passo="oferta">
+    <section class="passo" data-passo="oferta" data-sec="oferta">
       <p class="eyebrow">Não é curso — é o negócio pronto</p>
       <h2>Você não recebe só o nicho que combinou. Recebe os 90.</h2>
       <p>O diagnóstico aponta por onde começar — mas a compra libera o pacote completo: 30 negócios × 3 idiomas, cada um com página de venda e anúncio prontos.</p>
@@ -290,7 +290,7 @@
             <li>270 páginas de venda + criativos prontos</li>
             <li>Sala das 72h + atualizações vitalícias</li>
           </ul>
-          <a class="btn" href="https://go.singlr.com.br/checkout/c1g5V1dRZFJhZzNEbU1YRXQ3WkJpdVl6OjE3MA==">Quero os 90 apps — R$ 97</a>
+          <a class="btn" data-checkout data-track="Checkout 90 apps · R$ 97" href="https://go.singlr.com.br/checkout/c1g5V1dRZFJhZzNEbU1YRXQ3WkJpdVl6OjE3MA==">Quero os 90 apps — R$ 97</a>
         </div>
         <div class="plan">
           <p class="tag quiet">Só o mercado Brasil</p>
@@ -301,7 +301,7 @@
             <li>Os mesmos apps completos, com loja embutida</li>
             <li>Só o mercado Brasil</li>
           </ul>
-          <a class="btn-ghost" href="https://go.singlr.com.br/checkout/c1g5V1dRZFJhZzNEbU1YRXQ3WkJpdVl6OjE3MQ%3D%3D">Começar com 30</a>
+          <a class="btn-ghost" data-checkout data-track="Checkout 30 apps · R$ 67" href="https://go.singlr.com.br/checkout/c1g5V1dRZFJhZzNEbU1YRXQ3WkJpdVl6OjE3MQ%3D%3D">Começar com 30</a>
         </div>
       </div>
 
@@ -401,14 +401,43 @@
 
   function $(s){ return document.querySelector(s); }
 
+  // ── Rastreio (alimenta o /painel) ─────────────────────────────────────────
+  // js/track.js carrega com defer, ou seja, DEPOIS deste bloco. Enquanto ele
+  // nao existe, as chamadas ficam empilhadas em trackFila e sao drenadas na
+  // partida dele. Se o script nunca carregar (bloqueador), nada quebra aqui.
+  window.trackFila = window.trackFila || [];
+  function tk(metodo, a, b, c){
+    try {
+      if (window.track90) window.track90[metodo](a, b, c);
+      else window.trackFila.push([metodo, a, b, c]);
+    } catch (_) {}
+  }
+
+  // Degrau do funil que cada tela representa. Sao os mesmos nomes que
+  // api/track.js conhece — inventar nome aqui faria o evento ser descartado.
+  var PASSO_EVENTO = {
+    q1: "quiz_start",
+    q2: "quiz_q1",
+    q3: "quiz_q2",
+    email: "quiz_q3",
+    diagnostico: "quiz_diagnostico",
+    oferta: "quiz_oferta"
+  };
+  var jaDisparou = {};   // voltar e avancar de novo nao pode contar duas vezes
+
+  var CHAVE_TRACK = { nicho: 'quizNicho', tempo: 'quizTempo', experiencia: 'quizExperiencia' };
+
   function montarOpcoes(containerId, lista, chave, proximoPasso){
     var container = document.getElementById(containerId);
+    var perguntaDe = { nicho: 'q1', tempo: 'q2', experiencia: 'q3' };
     container.innerHTML = lista.map(function(op, i){
       return '<button class="opcao" data-valor="' + op[0] + '"><span class="num">' + (i + 1) + '</span><span>' + op[1] + '</span></button>';
     }).join('');
     container.querySelectorAll('.opcao').forEach(function(btn){
       btn.addEventListener('click', function(){
         respostas[chave] = btn.dataset.valor;
+        tk('set', CHAVE_TRACK[chave], btn.dataset.valor);
+        tk('evento', 'quiz_answer', perguntaDe[chave], btn.dataset.valor);
         irPara(proximoPasso);
       });
     });
@@ -423,6 +452,10 @@
     document.getElementById('barra').style.width = pct + '%';
     window.scrollTo({ top: 0, behavior: 'smooth' });
     if (passo === 'diagnostico') pintarDiagnostico();
+
+    tk('passo', passo);
+    var ev = PASSO_EVENTO[passo];
+    if (ev && !jaDisparou[ev]) { jaDisparou[ev] = 1; tk('evento', ev, passo); }
   }
 
   document.querySelectorAll('[data-acao="ir"]').forEach(function(btn){
@@ -438,6 +471,9 @@
     var email = document.getElementById('campo-email').value.trim();
     if (email) {
       respostas.email = email;
+      // O e-mail em si NAO vai pro rastreio — so o fato de ter deixado um.
+      tk('set', 'deuEmail', true);
+      tk('evento', 'quiz_lead', 'email');
       fetch('/api/captar-lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -478,7 +514,17 @@
     }).join('');
   }
 
+  // ── Abertura ──────────────────────────────────────────────────────────────
+  // ?passo=oferta abre direto numa tela. E assim que o /painel carrega a
+  // ultima tela do quiz no iframe pra desenhar o mapa de calor em cima dela —
+  // sem isso nao teria como ver a oferta sem responder o quiz inteiro.
+  var alvo = new URLSearchParams(location.search).get('passo');
+  if (alvo && ORDEM.indexOf(alvo) > -1) irPara(alvo);
+  else tk('passo', 'intro');
+
 })();
 </script>
+<!-- Rastreio do /painel: funil de telas, mapa de calor e sessões. -->
+<script src="/js/track.js" defer></script>
 </body>
 </html>
