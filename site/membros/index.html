@@ -13,45 +13,58 @@ body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--
 .caixa h1{margin:0 0 6px;font-size:20px;letter-spacing:-.3px}
 .caixa p{margin:0 0 22px;color:var(--txt2);font-size:13.5px}
 .campo{width:100%;padding:13px 14px;border-radius:10px;border:1px solid var(--linha);
-  background:var(--card2);color:var(--txt);font:inherit;font-size:15px;text-align:center;
-  letter-spacing:.06em}
+  background:var(--card2);color:var(--txt);font:inherit;font-size:15px;text-align:center}
 .campo:focus{outline:2px solid var(--acento);outline-offset:-1px}
 .btn{width:100%;margin-top:12px;padding:13px;border-radius:10px;border:0;
   background:var(--acento);color:#0b0b0d;font-weight:700;font-size:15px;cursor:pointer}
 .btn:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.6;cursor:default}
 .erro{margin-top:12px;font-size:13px;color:#ff6b6b;min-height:16px}
 </style></head><body>
 
 <form class="caixa" id="form-acesso">
   <h1>Área de Membros</h1>
-  <p>Digite a senha de acesso que você recebeu na confirmação da compra.</p>
-  <input class="campo" id="senha" type="password" placeholder="Senha de acesso" autocomplete="off" autofocus>
+  <p>Digite o e-mail que você usou na compra.</p>
+  <input class="campo" id="email" type="email" placeholder="seu@email.com" autocomplete="email" autofocus>
   <button class="btn" type="submit">Entrar</button>
   <p class="erro" id="erro"></p>
 </form>
 
 <script>
-// Senha compartilhada, entregue ao cliente na pagina de obrigado / e-mail apos a compra.
-// Para trocar: edite o valor de SENHA abaixo.
-const SENHA = "apps90-2026";
-
 const ls = { get:(k,d)=>{try{return localStorage.getItem(k)??d}catch(e){return d}},
              set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}} };
 
-// ja autenticado nesse navegador? pula direto pro painel.
-if (ls.get('acesso90') === 'ok') location.href = 'membros.html';
+if (ls.get('acesso90-email')) location.href = 'membros.html';
 
-document.getElementById('form-acesso').addEventListener('submit', e => {
+const form = document.getElementById('form-acesso');
+const botao = form.querySelector('button');
+const erro = document.getElementById('erro');
+
+form.addEventListener('submit', async e => {
   e.preventDefault();
-  const valor = document.getElementById('senha').value.trim();
-  if (valor === SENHA) {
-    ls.set('acesso90', 'ok');
-    location.href = 'membros.html';
-  } else {
-    document.getElementById('erro').textContent = 'Senha incorreta. Confira o material que voce recebeu na compra.';
-    document.getElementById('senha').value = '';
-    document.getElementById('senha').focus();
+  const email = document.getElementById('email').value.trim().toLowerCase();
+  if (!email) return;
+  erro.textContent = '';
+  botao.disabled = true;
+  botao.textContent = 'Verificando...';
+  try {
+    const r = await fetch('/api/checar-acesso', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    const data = await r.json();
+    if (data.ok) {
+      ls.set('acesso90-email', email);
+      location.href = 'membros.html';
+      return;
+    }
+    erro.textContent = 'E-mail não encontrado nas compras aprovadas. Confira se digitou certo, ou aguarde alguns minutos após a compra.';
+  } catch (err) {
+    erro.textContent = 'Não deu pra verificar agora. Tenta de novo em instantes.';
   }
+  botao.disabled = false;
+  botao.textContent = 'Entrar';
 });
 </script>
 </body></html>
