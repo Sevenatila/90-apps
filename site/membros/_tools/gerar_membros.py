@@ -169,6 +169,18 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 .slug{text-align:left;font-size:11.5px;color:var(--txt2);margin:0 0 16px;font-family:ui-monospace,monospace}
 .aviso{font-size:12px;color:var(--txt2);margin:14px 0 0}
 
+/* ---------- baixar o codigo do app ---------- */
+.baixar{margin-top:16px;padding-top:16px;border-top:1px solid var(--linha)}
+.baixar .rotulo{margin-bottom:8px}
+.idiomas{display:flex;gap:8px}
+.idiomas button{flex:1;padding:9px;border-radius:10px;font-size:13px;font-weight:600;
+  border:1px solid var(--linha);background:var(--card2);color:var(--txt)}
+.idiomas button:hover:not(:disabled){filter:brightness(1.15);border-color:var(--c)}
+.idiomas button:disabled{opacity:.55}
+.baixar-status{font-size:12px;color:var(--txt2);margin:10px 0 0;min-height:16px}
+.baixar-status.erro{color:#f4614a}
+.baixar-status.pronto{color:#3ecf8e}
+
 /* ---------- navegacao de paginas ---------- */
 .nav{display:flex;gap:4px;background:var(--card2);border:1px solid var(--linha);
   border-radius:11px;padding:4px}
@@ -337,6 +349,9 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 
 <div class="modal" id="modal"><div class="caixa" id="caixa"></div></div>
 
+<!-- empacotamento do app no proprio navegador, sem CDN nem servidor -->
+<script src="js/zip.js"></script>
+<script src="js/baixar-app.js"></script>
 <script>
 const DADOS = __DADOS__;
 const PALETA = ['#e2574c','#e8a13a','#3fb37f','#4a9ee2','#7c6cf0','#d05ca8','#2fa8a0','#c0873c'];
@@ -474,8 +489,37 @@ function abrirModal(slug){
     <div class="acoes">
       <button class="btn principal" onclick="verApp('${a.slug}')">Ver</button>
       <button class="btn" onclick="editarApp('${a.slug}')">Editar</button>
+    </div>
+    <div class="baixar">
+      <span class="rotulo">Baixar o código deste app</span>
+      <div class="idiomas">
+        <button data-baixa="pt">&#8681; Português</button>
+        ${a.es ? `<button data-baixa="es">&#8681; Español</button>` : ''}
+        ${a.en ? `<button data-baixa="en">&#8681; English</button>` : ''}
+      </div>
+      <p class="baixar-status" id="baixar-status">Vem em .zip, pronto pra subir na sua hospedagem.</p>
     </div>`;
+  $('#caixa').querySelectorAll('[data-baixa]').forEach(b =>
+    b.onclick = () => pegarCodigo(a, b.dataset.baixa));
   $('#modal').classList.add('on');
+}
+
+/* Empacota o app no proprio navegador (js/zip.js) e entrega o .zip. */
+async function pegarCodigo(app, idioma){
+  const status = $('#baixar-status');
+  const botoes = $('#caixa').querySelectorAll('[data-baixa]');
+  botoes.forEach(b => b.disabled = true);
+  status.className = 'baixar-status';
+  try {
+    const bytes = await baixarApp(app.slug, idioma, nomeDe(app), m => status.textContent = m);
+    status.className = 'baixar-status pronto';
+    status.textContent = 'Pronto — ' + (bytes / 1048576).toFixed(1) + ' MB. Olhe a pasta de downloads.';
+  } catch (e) {
+    status.className = 'baixar-status erro';
+    status.textContent = 'Não deu pra montar o pacote: ' + e.message;
+  } finally {
+    botoes.forEach(b => b.disabled = false);
+  }
 }
 function fecharModal(){ $('#modal').classList.remove('on'); }
 $('#modal').onclick = e => { if (e.target.id === 'modal') fecharModal(); };
