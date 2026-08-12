@@ -6,7 +6,7 @@
   "categoria_orig": "FITNESS",
   "nome_orig": "Calistenia Sexy",
   "tem_pagina": true,
-  "capa": "https://apps.igorstorm.com/sexy/images/capa/1"
+  "capa": "img/sexy-capa-1.jpg"
  },
  "cha_fim_da_panca": {
   "gerador": "cha",
@@ -15,7 +15,7 @@
   "categoria_orig": "SAUDE",
   "nome_orig": "Cha Fim da Panca",
   "tem_pagina": true,
-  "capa": "https://apps.igorstorm.com/cha/images/capa/1"
+  "capa": "img/cha-capa-1.jpg"
  },
  "pilates_app": {
   "gerador": "pilates",
@@ -24,7 +24,7 @@
   "categoria_orig": "FITNESS",
   "nome_orig": "Pilates em Casa",
   "tem_pagina": true,
-  "capa": "https://apps.igorstorm.com/pilates/images/capa/1"
+  "capa": "img/pilates-capa-1.jpg"
  },
  "barriga_de_aco": {
   "gerador": "barriga",
@@ -33,7 +33,7 @@
   "categoria_orig": "FITNESS",
   "nome_orig": "Barriga de Aco",
   "tem_pagina": true,
-  "capa": "https://apps.igorstorm.com/barriga/images/capa/1"
+  "capa": "img/barriga-capa-1.jpg"
  },
  "geladinho_gourmet": {
   "gerador": "geladinho",
@@ -42,7 +42,7 @@
   "categoria_orig": "CULINARIA",
   "nome_orig": "Geladinho Gourmet",
   "tem_pagina": true,
-  "capa": "https://apps.igorstorm.com/geladinho/images/capa/1"
+  "capa": "img/geladinho-capa-1.jpg"
  },
  "matando_procrastinacao": {
   "gerador": "procrastinacao",
@@ -51,7 +51,7 @@
   "categoria_orig": "PRODUTIVIDADE",
   "nome_orig": "Matando a Procrastinacao",
   "tem_pagina": true,
-  "capa": "https://apps.igorstorm.com/procrastinacao/images/capa/1"
+  "capa": "img/procrastinacao-capa-1.jpg"
  },
  "yoga_essencial": {
   "gerador": "yoga",
@@ -60,7 +60,7 @@
   "categoria_orig": "BEM",
   "nome_orig": "Yoga Essencial",
   "tem_pagina": true,
-  "capa": "https://apps.igorstorm.com/yoga/images/capa/1"
+  "capa": "img/yoga-capa-1.jpg"
  },
  "anti_ansiedade": {
   "gerador": "antiansiedade",
@@ -69,7 +69,7 @@
   "categoria_orig": "SAUDE",
   "nome_orig": "Anti-Ansiedade",
   "tem_pagina": true,
-  "capa": "https://apps.igorstorm.com/ansiedade/images/capa/1"
+  "capa": "img/ansiedade-capa-1.jpg"
  },
  "gluteo_perfeito": {
   "gerador": "gluteo",
@@ -78,7 +78,7 @@
   "categoria_orig": "FITNESS",
   "nome_orig": "Gluteo Perfeito",
   "tem_pagina": true,
-  "capa": "https://apps.igorstorm.com/gluteo/images/capa/1"
+  "capa": "img/gluteo-capa-1.jpg"
  },
  "app_cristao": {
   "gerador": "cristao",
@@ -87,7 +87,7 @@
   "categoria_orig": "ESPIRITUALIDADE",
   "nome_orig": "Cristao",
   "tem_pagina": true,
-  "capa": "https://apps.igorstorm.com/cristao/images/capa/1"
+  "capa": "img/cristao-capa-1.jpg"
  },
  "sopa_termogenica": {
   "gerador": "sopa",
@@ -96,7 +96,7 @@
   "categoria_orig": "CULINARIA",
   "nome_orig": "Sopa Termogenica",
   "tem_pagina": true,
-  "capa": "https://apps.igorstorm.com/sopa/images/capa/1"
+  "capa": "img/sopa-capa-1.jpg"
  },
  "suco_detox": {
   "gerador": "suco",
@@ -105,7 +105,7 @@
   "categoria_orig": "SAUDE",
   "nome_orig": "Suco Detox",
   "tem_pagina": true,
-  "capa": "https://apps.igorstorm.com/suco/images/capa/1"
+  "capa": "img/suco-capa-1.jpg"
  },
  "marketing_iniciante": {
   "gerador": "marketingdigitalparainiciante",
@@ -114,7 +114,7 @@
   "categoria_orig": "NEGOCIOS",
   "nome_orig": "Marketing Digital para Iniciante",
   "tem_pagina": false,
-  "capa": "https://apps.igorstorm.com/marketingdigitalparainiciante/images/capa/1"
+  "capa": "img/marketingdigitalparainiciante-capa-1.jpg"
  },
  "bolo_gourmet": {
   "gerador": "bologourmet",
@@ -123,7 +123,7 @@
   "categoria_orig": "CULINARIA",
   "nome_orig": "Bolo Gourmet",
   "tem_pagina": false,
-  "capa": "https://apps.igorstorm.com/bologourmet/images/capa/1"
+  "capa": "img/bologourmet-capa-1.jpg"
  },
  "brigadeiros_gourmet": {
   "gerador": "brigadeirosgourmet",
@@ -132,7 +132,7 @@
   "categoria_orig": "CULINARIA",
   "nome_orig": "Brigadeiros Gourmet",
   "tem_pagina": false,
-  "capa": "https://apps.igorstorm.com/brigadeirosgourmet/images/capa/1"
+  "capa": "img/brigadeirosgourmet-capa-1.jpg"
  },
  "anti_insonia": {
   "gerador": "antiinsonia",
@@ -141,7 +141,7 @@
   "categoria_orig": "SAUDE",
   "nome_orig": "Sono Profundo (Anti-Insonia)",
   "tem_pagina": false,
-  "capa": "https://apps.igorstorm.com/antiinsonia/images/capa/1"
+  "capa": "img/antiinsonia-capa-1.jpg"
  },
  "marmita_fitness": {
   "gerador": "marmitafit",
@@ -150,7 +150,7 @@
   "categoria_orig": "CULINARIA",
   "nome_orig": "Marmita Fitness",
   "tem_pagina": false,
-  "capa": "https://apps.igorstorm.com/marmitafit/images/capa/1"
+  "capa": "img/marmitafit-capa-1.jpg"
  },
  "inteligencia_emocional": {
   "gerador": "inteligenciaemocional",
@@ -159,7 +159,7 @@
   "categoria_orig": "DESENVOLVIMENTO",
   "nome_orig": "Inteligencia Emocional",
   "tem_pagina": false,
-  "capa": "https://apps.igorstorm.com/inteligenciaemorcional/images/capa/1"
+  "capa": "img/inteligenciaemorcional-capa-1.jpg"
  },
  "rotina_produtiva": {
   "gerador": "rotinaprodutiva",
@@ -168,7 +168,7 @@
   "categoria_orig": "PRODUTIVIDADE",
   "nome_orig": "Rotina Produtiva",
   "tem_pagina": false,
-  "capa": "https://apps.igorstorm.com/rotinaprodutiva/images/capa/1"
+  "capa": "img/rotinaprodutiva-capa-1.jpg"
  },
  "jejum_intermitente": {
   "gerador": "jejumintermitente",
@@ -177,7 +177,7 @@
   "categoria_orig": "SAUDE",
   "nome_orig": "Jejum Intermitente",
   "tem_pagina": false,
-  "capa": "https://apps.igorstorm.com/jejumintermitente/images/capa/1"
+  "capa": "img/jejumintermitente-capa-1.jpg"
  },
  "dieta_cetogenica": {
   "gerador": "cetogenica",
@@ -186,7 +186,7 @@
   "categoria_orig": "CULINARIA",
   "nome_orig": "Dieta Cetogenica",
   "tem_pagina": false,
-  "capa": "https://apps.igorstorm.com/cetogenica/images/capa/1"
+  "capa": "img/cetogenica-capa-1.jpg"
  },
  "reiki_app": {
   "gerador": "reiki",
@@ -195,7 +195,7 @@
   "categoria_orig": "ESPIRITUALIDADE",
   "nome_orig": "Reiki",
   "tem_pagina": false,
-  "capa": "https://apps.igorstorm.com/reiki/images/capa/1"
+  "capa": "img/reiki-capa-1.jpg"
  },
  "astrologia": {
   "gerador": "astrologia",
@@ -204,7 +204,7 @@
   "categoria_orig": "ESPIRITUALIDADE",
   "nome_orig": "Astrologia",
   "tem_pagina": false,
-  "capa": "https://apps.igorstorm.com/astrologia/images/capa/1"
+  "capa": "img/astrologia-capa-1.jpg"
  },
  "leitura_biblia": {
   "gerador": "leituradiariadabiblia",
@@ -213,7 +213,7 @@
   "categoria_orig": "ESPIRITUALIDADE",
   "nome_orig": "Leitura Diaria da Biblia",
   "tem_pagina": false,
-  "capa": "https://apps.igorstorm.com/leituradiariadabiblia/images/capa/1"
+  "capa": "img/leituradiariadabiblia-capa-1.jpg"
  },
  "espiritualidade_em_acao": {
   "gerador": "espiritualidadeemacao",
@@ -222,7 +222,7 @@
   "categoria_orig": "ESPIRITUALIDADE",
   "nome_orig": "Espiritualidade em Acao",
   "tem_pagina": false,
-  "capa": "https://apps.igorstorm.com/espiritualidadeemacao/images/capa/1"
+  "capa": "img/espiritualidadeemacao-capa-1.jpg"
  },
  "copywriter_pro": {
   "gerador": "copywriter",
@@ -231,7 +231,7 @@
   "categoria_orig": "NEGOCIOS",
   "nome_orig": "Copywriter PRO",
   "tem_pagina": false,
-  "capa": "https://apps.igorstorm.com/copywriter/images/capa/1"
+  "capa": "img/copywriter-capa-1.jpg"
  },
  "expert_trafego_pago": {
   "gerador": "expertemtrafegopago",
@@ -240,7 +240,7 @@
   "categoria_orig": "NEGOCIOS",
   "nome_orig": "Expert em Trafego Pago 2026",
   "tem_pagina": false,
-  "capa": "https://apps.igorstorm.com/expertemtrafegopago/images/capa/1"
+  "capa": "img/expertemtrafegopago-capa-1.jpg"
  },
  "lucrando_com_ia": {
   "gerador": "lucrandocomia",
@@ -249,7 +249,7 @@
   "categoria_orig": "NEGOCIOS",
   "nome_orig": "Lucrando com IA",
   "tem_pagina": false,
-  "capa": "https://apps.igorstorm.com/lucrandocomia/images/capa/1"
+  "capa": "img/lucrandocomia-capa-1.jpg"
  },
  "poder_da_oracao": {
   "gerador": "poderdaoracao",
@@ -258,7 +258,7 @@
   "categoria_orig": "ESPIRITUALIDADE",
   "nome_orig": "Poder da Oracao",
   "tem_pagina": false,
-  "capa": "https://apps.igorstorm.com/poderdaoracao/images/capa/1"
+  "capa": "img/poderdaoracao-capa-1.jpg"
  },
  "iogurte_gourmet": {
   "gerador": "iogurtegourmet",
@@ -267,7 +267,7 @@
   "categoria_orig": "CULINARIA",
   "nome_orig": "Iogurte Gourmet",
   "tem_pagina": false,
-  "capa": "https://apps.igorstorm.com/iogurtegourmet/images/capa/1"
+  "capa": "img/iogurtegourmet-capa-1.jpg"
  },
  "cardio_em_casa": {
   "gerador": "cardioemcasa",
@@ -276,7 +276,7 @@
   "categoria_orig": "FITNESS",
   "nome_orig": "Cardio em Casa",
   "tem_pagina": false,
-  "capa": "https://apps.igorstorm.com/cardioemcasa/images/capa/1"
+  "capa": "img/cardioemcasa-capa-1.jpg"
  },
  "receitas_para_diabeticos": {
   "gerador": "receitasparadiabeticos",
@@ -285,7 +285,7 @@
   "categoria_orig": "CULINARIA",
   "nome_orig": "Receitas para Diabeticos",
   "tem_pagina": false,
-  "capa": "https://apps.igorstorm.com/receitasparadiabeticos/images/capa/1"
+  "capa": "img/receitasparadiabeticos-capa-1.jpg"
  },
  "doces_sem_acucar": {
   "gerador": "docessemacucar",
@@ -294,7 +294,7 @@
   "categoria_orig": "CULINARIA",
   "nome_orig": "Doces sem Acucar",
   "tem_pagina": false,
-  "capa": "https://apps.igorstorm.com/docessemacucar/images/capa/1"
+  "capa": "img/docessemacucar-capa-1.jpg"
  },
  "vendas_whatsapp": {
   "gerador": "vendasnowhatsapp",
@@ -303,7 +303,7 @@
   "categoria_orig": "NEGOCIOS",
   "nome_orig": "Vendas no WhatsApp",
   "tem_pagina": false,
-  "capa": "https://apps.igorstorm.com/vendasnowhatsapp/images/capa/1"
+  "capa": "img/vendasnowhatsapp-capa-1.jpg"
  },
  "freelancer_digital": {
   "gerador": "freelancerdigital",
@@ -312,7 +312,7 @@
   "categoria_orig": "NEGOCIOS",
   "nome_orig": "Freelancer Digital",
   "tem_pagina": false,
-  "capa": "https://apps.igorstorm.com/freelancerdigital/images/capa/1"
+  "capa": "img/freelancerdigital-capa-1.jpg"
  },
  "antiestresse_app": {
   "gerador": "antiestresse",
@@ -321,6 +321,6 @@
   "categoria_orig": "SAUDE",
   "nome_orig": "Anti Estresse",
   "tem_pagina": false,
-  "capa": "https://apps.igorstorm.com/antiestresse/images/capa/1"
+  "capa": "img/antiestresse-capa-1.jpg"
  }
 }
