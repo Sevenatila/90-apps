@@ -30,9 +30,9 @@ body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--
   <p class="erro" id="erro"></p>
 </form>
 
-<script src="js/acesso.js"></script>
+<script src="/membros/js/acesso.js"></script>
 <script>
-if (Acesso.ler()) location.href = 'membros.html';
+if (Acesso.ler()) location.href = '/membros/membros.html';
 
 const form = document.getElementById('form-acesso');
 const botao = form.querySelector('button');
@@ -64,7 +64,7 @@ form.addEventListener('submit', async e => {
     if (data.ok) {
       // So manda pra area de membros se o navegador realmente guardou o
       // e-mail: sem isso, membros.html devolve pra ca e vira um vai-e-volta.
-      if (Acesso.gravar(email)) { location.href = 'membros.html'; return; }
+      if (Acesso.gravar(email)) { location.href = '/membros/membros.html'; return; }
       erro.textContent = 'Seu navegador está bloqueando o armazenamento do site. Abra este link no Chrome ou Safari (fora do app do Instagram/Facebook) e desative a navegação anônima.';
     } else {
       erro.textContent = RECADO[data.motivo] || RECADO['nao-encontrado'];
