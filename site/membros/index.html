@@ -30,15 +30,22 @@ body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--
   <p class="erro" id="erro"></p>
 </form>
 
+<script src="js/acesso.js"></script>
 <script>
-const ls = { get:(k,d)=>{try{return localStorage.getItem(k)??d}catch(e){return d}},
-             set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}} };
-
-if (ls.get('acesso90-email')) location.href = 'membros.html';
+if (Acesso.ler()) location.href = 'membros.html';
 
 const form = document.getElementById('form-acesso');
 const botao = form.querySelector('button');
 const erro = document.getElementById('erro');
+
+// A resposta agora diz POR QUE nao entrou. Antes era tudo "e-mail nao
+// encontrado" — inclusive quando o banco estava fora e a compra existia.
+const RECADO = {
+  'nao-encontrado': 'E-mail não encontrado nas compras aprovadas. Confira se digitou o mesmo e-mail da compra, ou aguarde alguns minutos após o pagamento.',
+  'reembolsado':    'Esta compra consta como reembolsada/cancelada. Se isso estiver errado, fale com o suporte.',
+  'indisponivel':   'Nosso sistema está instável agora. Tenta de novo em um minuto — seu acesso não se perde.',
+  'email-invalido': 'Digite um e-mail válido.'
+};
 
 form.addEventListener('submit', async e => {
   e.preventDefault();
@@ -55,11 +62,13 @@ form.addEventListener('submit', async e => {
     });
     const data = await r.json();
     if (data.ok) {
-      ls.set('acesso90-email', email);
-      location.href = 'membros.html';
-      return;
+      // So manda pra area de membros se o navegador realmente guardou o
+      // e-mail: sem isso, membros.html devolve pra ca e vira um vai-e-volta.
+      if (Acesso.gravar(email)) { location.href = 'membros.html'; return; }
+      erro.textContent = 'Seu navegador está bloqueando o armazenamento do site. Abra este link no Chrome ou Safari (fora do app do Instagram/Facebook) e desative a navegação anônima.';
+    } else {
+      erro.textContent = RECADO[data.motivo] || RECADO['nao-encontrado'];
     }
-    erro.textContent = 'E-mail não encontrado nas compras aprovadas. Confira se digitou certo, ou aguarde alguns minutos após a compra.';
   } catch (err) {
     erro.textContent = 'Não deu pra verificar agora. Tenta de novo em instantes.';
   }

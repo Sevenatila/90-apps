@@ -2,8 +2,9 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>Area de Membros</title>
+<script src="js/acesso.js"></script>
 <script>
-try{ if (!localStorage.getItem('acesso90-email')) location.replace('index.html'); }
+try{ if (!Acesso.ler()) location.replace('index.html'); }
 catch(e){ location.replace('index.html'); }
 </script>
 <style>
@@ -251,6 +252,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
     <h1 class="titulo-pg">Criativos</h1>
     <p class="sub-pg">70 videos de anuncio em 35 apps. Baixe um por vez ou todos do app.</p>
     <div class="filtros" id="filtros"></div>
+    <p class="sem-ads" id="aviso-criativos"></p>
     <div id="lista-criativos"></div>
   </section>
 
@@ -512,8 +514,27 @@ document.querySelectorAll('.nav button').forEach(b => b.onclick = () => irPara(b
 /* ---------- criativos ---------- */
 let filtroCat = 'todos';
 
-function baixarUm(url, nome){
-  window.open(url, '_blank');
+/* O botao "Baixar" so abria o video numa aba — quem clicava achava que tinha
+   quebrado. Agora tenta baixar de verdade; se o servidor dos criativos nao
+   liberar CORS, cai pra aba nova e explica o que fazer. */
+async function baixarUm(url, nome){
+  const aviso = $('#aviso-criativos');
+  try {
+    const r = await fetch(url, { mode: 'cors' });
+    if (!r.ok) throw new Error('erro ' + r.status);
+    const blob = await r.blob();
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = nome || 'video.mp4';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(link.href), 60000);
+    if (aviso) aviso.textContent = '';
+  } catch (e) {
+    window.open(url, '_blank');
+    if (aviso) aviso.textContent = 'O vídeo abriu numa aba nova: toque e segure (ou clique com o botão direito) para salvar no aparelho.';
+  }
 }
 function baixarTodos(slug){
   const { a } = achar(slug);

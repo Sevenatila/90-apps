@@ -168,7 +168,8 @@
     {id:'calor',   ic:'◉', label:'Mapa de calor',sub:'Onde o dedo encosta'},
     {id:'quiz',    ic:'✎', label:'Quiz',         sub:'O que respondem e o que vira'},
     {id:'sessoes', ic:'☰', label:'Sessões',      sub:'Jornada de cada visita'},
-    {id:'eventos', ic:'⌨', label:'Eventos',      sub:'Log cru do rastreio'}
+    {id:'eventos', ic:'⌨', label:'Eventos',      sub:'Log cru do rastreio'},
+    {id:'acessos', ic:'⚿', label:'Acessos',      sub:'Quem comprou e quem ficou de fora'}
   ];
 
   var PERIODOS = [
@@ -196,6 +197,7 @@
   var token = null, tela = 'visao';
   var periodo = '7d', de = '', ate = '';
   var fPage = '', fDevice = '', fUtm = '';
+  var buscaAcesso = '';
   var origens = [];
   var hmPage = 'site', hmSecao = '', hmDados = null;
   var sessFiltro = 'all', sessOffset = 0;
@@ -811,6 +813,103 @@
     });
   }
 
+  // ── Acessos ──────────────────────────────────────────────────────────────
+  // Tela de suporte: cliente pagou, webhook não liberou, e alguém precisa
+  // destravar isso agora — sem abrir o banco.
+  function acaoAcesso(acao, email){
+    var qs = new URLSearchParams({ view:'acessos', acao:acao, email:email });
+    return fetch('/api/admin?'+qs.toString(), {
+      method:'POST', headers:{ Authorization:'Bearer '+token }
+    }).then(function(r){
+      if(r.status===401){ sair(); throw new Error('Sessão expirada — entre de novo.'); }
+      return r.json().then(function(d){
+        if(!r.ok) throw new Error(d.error || d.detail || ('Erro '+r.status));
+        return d;
+      });
+    });
+  }
+
+  function telaAcessos(){
+    return api('acessos', buscaAcesso ? { busca: buscaAcesso } : {}).then(function(d){
+      var html = painel('Liberar acesso na mão',
+          '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">'
+        + '<input class="data" id="acEmail" placeholder="e-mail da compra" style="min-width:260px;flex:1">'
+        + '<button class="chip" id="acLiberar">Liberar</button>'
+        + '<button class="chip" id="acBloquear">Bloquear</button>'
+        + '</div>'
+        + '<p class="sub" id="acAviso" style="margin-top:10px">Tem que ser o mesmo e-mail que o cliente digita na área de membros.</p>');
+
+      html += '<div style="margin-top:12px">' + painel('Webhooks que não viraram acesso',
+        d.perdidos.length
+          ? '<div style="overflow-x:auto"><table><thead><tr><th>Quando</th><th>Motivo</th><th>E-mail no payload</th><th></th></tr></thead><tbody>'
+            + d.perdidos.map(function(p){
+                var em = emailDoPayload(p.payload);
+                return '<tr><td style="color:var(--muted);white-space:nowrap">'+dt(p.ts)+'</td>'
+                  + '<td><span class="trunc" style="color:var(--warn)">'+esc(p.decisao||'—')+'</span></td>'
+                  + '<td class="mono">'+esc(em||'—')+'</td>'
+                  + '<td>'+(em ? '<button class="chip" data-lib="'+esc(em)+'">Liberar</button>' : '')+'</td></tr>';
+              }).join('') + '</tbody></table></div>'
+          : vazio('Nenhuma venda ficou pelo caminho nos últimos 30 dias')) + '</div>';
+
+      html += '<div style="margin-top:12px">' + painel('Compradores'+(d.busca?' · busca "'+esc(d.busca)+'"':''),
+          '<div style="display:flex;gap:8px;margin-bottom:10px">'
+        + '<input class="data" id="acBusca" placeholder="buscar e-mail" value="'+esc(d.busca||'')+'" style="min-width:220px;flex:1">'
+        + '<button class="chip" id="acBuscar">Buscar</button></div>'
+        + (d.compradores.length
+          ? '<div style="overflow-x:auto"><table><thead><tr><th>E-mail</th><th>Status</th><th>Atualizado</th><th></th></tr></thead><tbody>'
+            + d.compradores.map(function(c){
+                var cor = c.status==='ativo' ? 'color:var(--accent)' : 'color:var(--danger)';
+                return '<tr><td class="mono">'+esc(c.email)+'</td>'
+                  + '<td style="'+cor+'">'+esc(c.status)+'</td>'
+                  + '<td style="color:var(--muted);white-space:nowrap">'+dt(c.atualizado_em)+'</td>'
+                  + '<td>'+(c.status==='ativo'
+                      ? '<button class="chip" data-blo="'+esc(c.email)+'">Bloquear</button>'
+                      : '<button class="chip" data-lib="'+esc(c.email)+'">Liberar</button>')+'</td></tr>';
+              }).join('') + '</tbody></table></div>'
+          : vazio('Nenhum comprador registrado ainda'))) + '</div>';
+
+      return html;
+    });
+  }
+
+  // O payload cru do gateway vem inteiro no log; aqui só interessa achar um
+  // e-mail dentro dele pra oferecer o botão de liberar.
+  function emailDoPayload(obj){
+    var achado = null;
+    (function varrer(o, nivel){
+      if(!o || typeof o !== 'object' || nivel > 6 || achado) return;
+      Object.keys(o).forEach(function(k){
+        if(achado) return;
+        var v = o[k];
+        if(typeof v === 'string' && /e-?mail/i.test(k) && v.indexOf('@') > -1) achado = v.toLowerCase().trim();
+        else if(v && typeof v === 'object') varrer(v, nivel+1);
+      });
+    })(obj, 0);
+    return achado;
+  }
+
+  function ligarAcessos(){
+    var aviso = $('acAviso');
+    function rodar(acao, email){
+      if(!email || email.indexOf('@') < 0){ aviso.textContent = 'Digite um e-mail válido.'; return; }
+      aviso.textContent = 'Salvando…';
+      acaoAcesso(acao, email).then(function(){
+        aviso.textContent = (acao==='liberar' ? 'Liberado: ' : 'Bloqueado: ') + email;
+        render();
+      }).catch(function(e){ aviso.textContent = e.message; });
+    }
+    $('acLiberar').onclick  = function(){ rodar('liberar',  $('acEmail').value.trim().toLowerCase()); };
+    $('acBloquear').onclick = function(){ rodar('bloquear', $('acEmail').value.trim().toLowerCase()); };
+    $('acBuscar').onclick   = function(){ buscaAcesso = $('acBusca').value.trim().toLowerCase(); render(); };
+    $('acBusca').onkeydown  = function(ev){ if(ev.key==='Enter') $('acBuscar').onclick(); };
+    Array.prototype.forEach.call(document.querySelectorAll('[data-lib]'), function(b){
+      b.onclick = function(){ rodar('liberar', b.dataset.lib); };
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-blo]'), function(b){
+      b.onclick = function(){ rodar('bloquear', b.dataset.blo); };
+    });
+  }
+
   // ── Roteador ─────────────────────────────────────────────────────────────
   function render(){
     $('area').innerHTML = '<div class="carregando">carregando…</div>';
@@ -819,6 +918,7 @@
           : tela==='calor'   ? telaCalor()
           : tela==='quiz'    ? telaQuiz()
           : tela==='sessoes' ? telaSessoes()
+          : tela==='acessos' ? telaAcessos()
           : telaEventos();
 
     p.then(function(html){
@@ -834,6 +934,7 @@
         var sel = $('selSec');
         if(sel) sel.onchange = function(){ hmSecao = sel.value; render(); };
       }
+      if(tela==='acessos') ligarAcessos();
       // A lista de origens só chega junto com a visão geral; quando chegar,
       // o seletor de origem precisa ser repintado.
       if(tela==='visao') pintarFiltros();

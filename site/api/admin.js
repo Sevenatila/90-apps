@@ -15,6 +15,7 @@ const VIEWS = {
   sessions: require('./_views/sessions'),
   events:   require('./_views/events'),
   quiz:     require('./_views/quiz'),
+  acessos:  require('./_views/acessos'),
 };
 
 module.exports = async function handler(req, res) {

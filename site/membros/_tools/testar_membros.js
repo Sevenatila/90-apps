@@ -5,7 +5,10 @@ const vm = require('vm');
 
 const BASE = path.join(__dirname, '..');
 const html = fs.readFileSync(path.join(BASE, 'membros.html'), 'utf8');
-const script = html.match(/<script>([\s\S]*?)<\/script>/)[1];
+// O primeiro <script> do arquivo e a trava de acesso (localStorage + redirect).
+// O que este teste exercita e o ultimo: a logica da tela.
+const blocos = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]);
+const script = blocos[blocos.length - 1];
 
 // ---- DOM minimo ----
 const feitos = [];
@@ -16,6 +19,17 @@ function novoEl(id) {
     classList: { _s: new Set(), add(c) { this._s.add(c); }, remove(c) { this._s.delete(c); },
                  toggle(c, v) { v ? this._s.add(c) : this._s.delete(c); }, contains(c) { return this._s.has(c); } },
     focus() {}, onclick: null, oninput: null,
+    // O modal procura os proprios botoes de download dentro do que acabou de
+    // desenhar — sem isto o teste morre antes de chegar nas verificacoes.
+    querySelectorAll(sel) {
+      const attr = (sel.match(/^\[([a-z-]+)\]$/) || [])[1];
+      if (!attr) return [];
+      const chave = attr.replace(/^data-/, '');
+      const achados = [];
+      for (const m of String(el._html).matchAll(new RegExp(attr + '="([^"]*)"', 'g')))
+        achados.push({ dataset: { [chave]: m[1] }, onclick: null, disabled: false });
+      return achados;
+    },
   };
   Object.defineProperty(el, 'innerHTML', {
     get() { return el._html; },
@@ -232,12 +246,11 @@ chips.find((c) => c.dataset.f === 'todos').onclick();
 check('filtro "todos" restaura', (g('#lista-criativos')._html.match(/class="criativo"/g) || []).length === 36,
       (g('#lista-criativos')._html.match(/class="criativo"/g) || []).length + '');
 
-// download passa pelo proxy local
+// Download: tenta baixar o arquivo; sem CORS (e aqui nao ha nem fetch), o
+// caminho de escape e abrir numa aba — nunca ficar sem resposta nenhuma.
 ctx.baixarUm('https://eva.igorstorm.com/criativos/yoga/ads1.mp4', 'yoga_essencial-ads1.mp4');
-check('download usa /baixar', cliques.length === 1 && cliques[0].startsWith('/baixar?url='), cliques[0]);
-check('download leva url codificada',
-      cliques[0].includes(encodeURIComponent('https://eva.igorstorm.com/criativos/yoga/ads1.mp4')));
-check('download leva nome do arquivo', cliques[0].includes('yoga_essencial-ads1.mp4'));
+check('download sem CORS abre o video numa aba',
+      abertas.at(-1) === 'https://eva.igorstorm.com/criativos/yoga/ads1.mp4', abertas.at(-1));
 
 // ver abre o video
 ctx.assistir('https://eva.igorstorm.com/criativos/yoga/ads1.mp4');
